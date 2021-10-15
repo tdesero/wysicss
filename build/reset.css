@@ -1,0 +1,31 @@
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+}
+
+div[class=""] {
+  min-height: 50px;
+  min-width: 50px;
+  background-color: rgba(99, 102, 241, 0.6);
+  color: white;
+  padding: 16px;
+  padding-top: 32px;
+}
+
+div[class=""]:before {
+  content: "Add a class with styles to this Element";
+  font-size: 12px;
+  font-weight: normal;
+}
