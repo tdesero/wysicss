@@ -27,6 +27,7 @@ export class ContextProvider extends Component {
     this.moveElement = this.moveElement.bind(this);
     this.cloneElement = this.cloneElement.bind(this);
     this.importJSON = this.importJSON.bind(this);
+    this.moveElementFromTo = this.moveElementFromTo.bind(this);
 
     this.state = {
       currentActive: undefined,
@@ -48,11 +49,12 @@ export class ContextProvider extends Component {
       updatePseudoClass: this.updatePseudoClass,
       changeElementTag: this.changeElementTag,
       moveElement: this.moveElement,
+      moveElementFromTo: this.moveElementFromTo,
       cloneElement: this.cloneElement,
       importJSON: this.importJSON,
 
       //getters
-      getClassByName: this.getClassByName
+      getClassByName: this.getClassByName,
     };
   }
 
@@ -98,8 +100,8 @@ export class ContextProvider extends Component {
         ...newClassNames[index],
         properties: {
           ...newClassNames[index].properties,
-          [property]: { value, unit }
-        }
+          [property]: { value, unit },
+        },
       };
     }
     this.setState({ classNames: [...newClassNames] });
@@ -151,7 +153,7 @@ export class ContextProvider extends Component {
       tag: tagName,
       id: ID(),
       classNames: [],
-      children: []
+      children: [],
     };
 
     if (!tagName) {
@@ -257,6 +259,48 @@ export class ContextProvider extends Component {
       var f = data.splice(from, 1)[0];
       // insert stored item into position `to`
       data.splice(to, 0, f);
+    }
+    moveItem(from, to);
+    this.setState({ elements });
+  }
+
+  moveElementFromTo(fromID, toID) {
+    const elements = [...this.state.elements];
+    let fromParentAndIndex = findParentAndIndexInElements(elements, fromID);
+    let toParentAndIndex = findParentAndIndexInElements(elements, toID);
+
+    let fromArray;
+    let toArray;
+    let from;
+    let to;
+
+    if (!fromParentAndIndex) {
+      from = elements.findIndex((el) => el.id === fromID);
+      fromArray = elements;
+    } else {
+      from = fromParentAndIndex.index;
+      fromArray = fromParentAndIndex.parent.children;
+    }
+
+    if (!toParentAndIndex) {
+      to = elements.findIndex((el) => el.id === toID);
+      toArray = elements;
+    } else {
+      to = toParentAndIndex.index;
+      toArray = toParentAndIndex.parent.children;
+    }
+
+    //check if element is moved inside itself
+    if (findInElements(findInElements(elements, fromID).children, toID)) {
+      console.log("cant move item inside item");
+      return;
+    }
+
+    function moveItem(from, to) {
+      // remove `from` item and store it
+      var f = fromArray.splice(from, 1)[0];
+      // insert stored item into position `to`
+      toArray.splice(to, 0, f);
     }
     moveItem(from, to);
     this.setState({ elements });

@@ -12,7 +12,8 @@ export default function ElementTreeContainer() {
         removeElement,
         classNames,
         moveElement,
-        cloneElement
+        moveElementFromTo,
+        cloneElement,
       }) => (
         <div>
           <div className="border-t overflow-auto pb-5">
@@ -25,7 +26,8 @@ export default function ElementTreeContainer() {
                 removeElement,
                 classNames,
                 moveElement,
-                cloneElement
+                moveElementFromTo,
+                cloneElement,
               }}
             />
           </div>
