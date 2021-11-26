@@ -33,11 +33,20 @@ export class ContextProvider extends Component {
     this.cloneElement = this.cloneElement.bind(this);
     this.importJSON = this.importJSON.bind(this);
     this.moveElementFromTo = this.moveElementFromTo.bind(this);
+    this.historyMove = this.historyMove.bind(this);
 
     this.state = {
       currentActive: undefined,
       classNames: DEFAULT_CLASSNAMES,
       elements: DEFAULT_ELEMENTS,
+      history: [
+        {
+          //TODO: this is just a fallback initial history state
+          classNames: DEFAULT_CLASSNAMES,
+          elements: DEFAULT_ELEMENTS,
+        },
+      ],
+      historyPos: 0, //not active, negative is active
 
       // methods
       addClassName: this.addClassName,
@@ -57,6 +66,7 @@ export class ContextProvider extends Component {
       moveElementFromTo: this.moveElementFromTo,
       cloneElement: this.cloneElement,
       importJSON: this.importJSON,
+      historyMove: this.historyMove,
 
       //getters
       getClassByName: this.getClassByName,
@@ -69,7 +79,10 @@ export class ContextProvider extends Component {
     }
     const newClassObj = { name: makeSafeForCSS(className), txt: "" };
     const newClassNames = [...this.state.classNames, newClassObj];
-    this.setState({ classNames: newClassNames });
+    this.setState({ classNames: newClassNames }, () => {
+      this.addToHistory();
+    });
+
     return newClassObj;
   }
 
@@ -79,7 +92,10 @@ export class ContextProvider extends Component {
     if (index > -1) {
       newClassNames.splice(index, 1);
     }
-    this.setState({ classNames: newClassNames });
+
+    this.setState({ classNames: newClassNames }, () => {
+      this.addToHistory();
+    });
   }
 
   updateClassText(classNameObj, txt) {
@@ -91,6 +107,9 @@ export class ContextProvider extends Component {
     if (index > -1) {
       newClassNames[index] = { ...newClassNames[index], txt };
     }
+
+    //TODO: needs history but is updated very frequently
+
     this.setState({ classNames: [...newClassNames] });
   }
 
@@ -109,6 +128,9 @@ export class ContextProvider extends Component {
         },
       };
     }
+
+    //TODO: needs history but is updated very frequently
+
     this.setState({ classNames: [...newClassNames] });
   }
 
@@ -134,7 +156,10 @@ export class ContextProvider extends Component {
         this.addClassName(className);
       }
     }
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   removeClassFromElement(id, className) {
@@ -148,7 +173,10 @@ export class ContextProvider extends Component {
         el.classNames.splice(idx, 1);
       }
     }
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   addChildToElement(id, tagName) {
@@ -173,7 +201,10 @@ export class ContextProvider extends Component {
       elements.push(child);
     }
     this.setCurrentActive(child);
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   removeElement(id) {
@@ -193,7 +224,10 @@ export class ContextProvider extends Component {
     } else {
       found.parent.children && found.parent.children.splice(found.index, 1);
     }
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   changeElementText(id, txt) {
@@ -201,7 +235,10 @@ export class ContextProvider extends Component {
     const el = findInElements(elements, id);
 
     el.text = txt;
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   changeElementSrc(id, url) {
@@ -209,7 +246,10 @@ export class ContextProvider extends Component {
     const el = findInElements(elements, id);
 
     el.src = url;
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   // add pseudo like :hover, :before ...
@@ -222,7 +262,10 @@ export class ContextProvider extends Component {
     if (index > -1) {
       newClassNames[index] = { ...newClassNames[index], [pseudo]: txt };
     }
-    this.setState({ classNames: [...newClassNames] });
+
+    this.setState({ classNames: [...newClassNames] }, () => {
+      this.addToHistory();
+    });
   }
 
   changeElementTag(id, txt) {
@@ -230,7 +273,10 @@ export class ContextProvider extends Component {
     const el = findInElements(elements, id);
 
     el.tag = txt;
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   getClassByName(name) {
@@ -266,7 +312,10 @@ export class ContextProvider extends Component {
       data.splice(to, 0, f);
     }
     moveItem(from, to);
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   moveElementFromTo(fromID, toID, position) {
@@ -329,7 +378,10 @@ export class ContextProvider extends Component {
       }
     }
     moveItem(from, to);
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   cloneElement(id) {
@@ -362,7 +414,10 @@ export class ContextProvider extends Component {
         found.parent.children.splice(found.index + 1, 0, cloned);
     }
     console.log(id, cloned);
-    this.setState({ elements });
+
+    this.setState({ elements }, () => {
+      this.addToHistory();
+    });
   }
 
   importJSON(e) {
@@ -372,12 +427,43 @@ export class ContextProvider extends Component {
     reader.onload = (event) => {
       const json = JSON.parse(event.target.result);
       const { classNames, elements } = json;
+
+      this.addToHistory();
+
       that.setState({ classNames, elements });
     };
     reader.onerror = (error) => {
       console.log(error);
     };
     reader.readAsText(file);
+  }
+
+  addToHistory() {
+    this.setState(
+      {
+        history: this.state.history
+          .slice(0, this.state.history.length + this.state.historyPos)
+          .concat({
+            elements: this.state.elements,
+            classNames: this.state.classNames,
+          }),
+        historyPos: 0,
+      },
+      () => {
+        console.log("history", this.state.history);
+      }
+    );
+  }
+
+  historyMove(step) {
+    const newHistoryPos = this.state.historyPos + step;
+    const pos = this.state.history.length - 1 + newHistoryPos;
+
+    this.setState({
+      classNames: this.state.history[pos].classNames,
+      elements: this.state.history[pos].elements,
+      historyPos: newHistoryPos,
+    });
   }
 
   render() {
