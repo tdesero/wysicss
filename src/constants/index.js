@@ -12,9 +12,9 @@ export const DEFAULT_ELEMENTS = [
           {
             tag: false,
             text: "Brand",
-            id: 4
-          }
-        ]
+            id: 4,
+          },
+        ],
       },
       {
         tag: "div",
@@ -25,23 +25,23 @@ export const DEFAULT_ELEMENTS = [
             tag: "div",
             id: "_04btqcxj5",
             classNames: ["menu-icon__bar"],
-            children: []
+            children: [],
           },
           {
             tag: "div",
             id: "_a1xw92k7b",
             classNames: ["menu-icon__bar"],
-            children: []
+            children: [],
           },
           {
             tag: "div",
             id: "_8qok9wfs1",
             classNames: ["menu-icon__bar"],
-            children: []
-          }
-        ]
-      }
-    ]
+            children: [],
+          },
+        ],
+      },
+    ],
   },
   {
     tag: "div",
@@ -58,12 +58,12 @@ export const DEFAULT_ELEMENTS = [
             id: "_pee8z2jje",
             classNames: [],
             children: [],
-            text: "I am a nice Website"
-          }
-        ]
-      }
-    ]
-  }
+            text: "I am a nice Website",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const DEFAULT_CLASSNAMES = [
@@ -73,41 +73,41 @@ export const DEFAULT_CLASSNAMES = [
     properties: {
       "padding-left": {
         value: 40,
-        unit: "px"
+        unit: "px",
       },
       "padding-right": {
         value: 40,
-        unit: "px"
+        unit: "px",
       },
       "padding-top": {
         value: 30,
-        unit: "px"
+        unit: "px",
       },
       "padding-bottom": {
         value: 30,
-        unit: "px"
+        unit: "px",
       },
       "background-color": {
         value: "#db6666",
-        unit: ""
+        unit: "",
       },
       display: {
         value: "flex",
-        unit: ""
+        unit: "",
       },
       "justify-content": {
         value: "space-between",
-        unit: ""
+        unit: "",
       },
       "align-items": {
         value: "center",
-        unit: ""
-      }
-    }
+        unit: "",
+      },
+    },
   },
   {
     name: "navbar__brand",
-    txt: ""
+    txt: "",
   },
   {
     name: "main",
@@ -115,21 +115,21 @@ export const DEFAULT_CLASSNAMES = [
     properties: {
       "padding-right": {
         value: "10",
-        unit: "%"
+        unit: "%",
       },
       "padding-left": {
         value: "10",
-        unit: "%"
+        unit: "%",
       },
       "padding-top": {
         value: 40,
-        unit: "px"
+        unit: "px",
       },
       "padding-bottom": {
         value: 40,
-        unit: "px"
-      }
-    }
+        unit: "px",
+      },
+    },
   },
   {
     name: "card",
@@ -137,53 +137,53 @@ export const DEFAULT_CLASSNAMES = [
     properties: {
       height: {
         value: 481,
-        unit: "px"
+        unit: "px",
       },
       "background-color": {
         value: "#ebebeb",
-        unit: ""
+        unit: "",
       },
       "border-top-left-radius": {
         value: "10",
-        unit: "px"
+        unit: "px",
       },
       "border-top-right-radius": {
         value: "10",
-        unit: "px"
+        unit: "px",
       },
       "border-bottom-right-radius": {
         value: "10",
-        unit: "px"
+        unit: "px",
       },
       "border-bottom-left-radius": {
         value: "10",
-        unit: "px"
+        unit: "px",
       },
       "font-size": {
         value: 56,
-        unit: "px"
+        unit: "px",
       },
       "padding-top": {
         value: 25,
-        unit: "px"
+        unit: "px",
       },
       "padding-right": {
         value: "25",
-        unit: "px"
+        unit: "px",
       },
       "padding-bottom": {
         value: "25",
-        unit: "px"
+        unit: "px",
       },
       "padding-left": {
         value: "25",
-        unit: "px"
-      }
-    }
+        unit: "px",
+      },
+    },
   },
   {
     name: "menu-icon",
-    txt: ""
+    txt: "",
   },
   {
     name: "menu-icon__bar",
@@ -191,24 +191,30 @@ export const DEFAULT_CLASSNAMES = [
     properties: {
       height: {
         value: "2",
-        unit: "px"
+        unit: "px",
       },
       "background-color": {
         value: "#000000",
-        unit: ""
+        unit: "",
       },
       width: {
         value: "30",
-        unit: "px"
+        unit: "px",
       },
       "margin-top": {
         value: "5",
-        unit: "px"
+        unit: "px",
       },
       "margin-bottom": {
         value: "5",
-        unit: "px"
-      }
-    }
-  }
+        unit: "px",
+      },
+    },
+  },
 ];
+
+export const MOVE_ELEMENT_POSITION = {
+  AFTER: "AFTER",
+  BEFORE: "BEFORE",
+  INSIDE: "INSIDE",
+};

@@ -4,7 +4,12 @@ import findParentAndIndexInElements from "./helpers/findParentAndIndexInElements
 import ID from "./helpers/id";
 import deepClone from "./helpers/deepClone";
 import makeSafeForCSS from "./helpers/safeClassName";
-import { DEFAULT_ELEMENTS, DEFAULT_CLASSNAMES } from "./constants";
+import {
+  DEFAULT_ELEMENTS,
+  DEFAULT_CLASSNAMES,
+  MOVE_ELEMENT_POSITION,
+} from "./constants";
+
 export const Context = createContext();
 
 export class ContextProvider extends Component {
@@ -264,10 +269,12 @@ export class ContextProvider extends Component {
     this.setState({ elements });
   }
 
-  moveElementFromTo(fromID, toID) {
+  moveElementFromTo(fromID, toID, position) {
     const elements = [...this.state.elements];
     let fromParentAndIndex = findParentAndIndexInElements(elements, fromID);
     let toParentAndIndex = findParentAndIndexInElements(elements, toID);
+    const fromElement = findInElements(elements, fromID);
+    const toElement = findInElements(elements, toID);
 
     let fromArray;
     let toArray;
@@ -291,16 +298,35 @@ export class ContextProvider extends Component {
     }
 
     //check if element is moved inside itself
-    if (findInElements(findInElements(elements, fromID).children, toID)) {
+    const childrenOfFromElement = fromElement.children;
+    if (childrenOfFromElement && findInElements(childrenOfFromElement, toID)) {
       console.log("cant move item inside item");
       return;
     }
 
     function moveItem(from, to) {
-      // remove `from` item and store it
       var f = fromArray.splice(from, 1)[0];
-      // insert stored item into position `to`
-      toArray.splice(to, 0, f);
+      switch (position) {
+        case MOVE_ELEMENT_POSITION.BEFORE:
+          if (fromArray == toArray && from < to) {
+            toArray.splice(to - 1, 0, f);
+          } else {
+            toArray.splice(to, 0, f);
+          }
+          break;
+        case MOVE_ELEMENT_POSITION.AFTER:
+          if (fromArray == toArray && from < to) {
+            toArray.splice(to, 0, f);
+          } else {
+            toArray.splice(to + 1, 0, f);
+          }
+          break;
+        case MOVE_ELEMENT_POSITION.INSIDE:
+          toElement.children?.push(f);
+          break;
+        default:
+          break;
+      }
     }
     moveItem(from, to);
     this.setState({ elements });

@@ -2,8 +2,10 @@ import CollapsableElement from "./common/CollapsableElement";
 import * as Icon from "react-feather";
 import { useDrag, useDrop } from "react-dnd";
 import ElementTreeItem from "./ElementTreeItem";
+import { MOVE_ELEMENT_POSITION } from "../constants";
 
 export default function ElementTreeItemSingle({
+  //TODO: get it directly from context...
   setCurrentActive,
   currentActive,
   addChildToElement,
@@ -11,23 +13,51 @@ export default function ElementTreeItemSingle({
   moveElement,
   moveElementFromTo,
   cloneElement,
+
+  //props for this el
   el,
 }) {
-  // useDrag - the list item is draggable
   const [{}, dragRef] = useDrag({
     type: "treeitem",
     item: { id: el.id },
   });
 
-  // useDrop - the list item is also a drop area
-  const [{ isOver }, dropRef] = useDrop({
+  const [{ isOverBefore }, dropRefBefore] = useDrop({
     accept: "treeitem",
-    hover: (item, monitor) => {
-      console.log("hovering");
-    },
     drop: (item) => {
-      console.log(`move ${item.id} to ${el.id}`);
-      moveElementFromTo(item.id, el.id);
+      console.log(`move ${item.id} to ${el.id}, before`);
+      moveElementFromTo(item.id, el.id, MOVE_ELEMENT_POSITION.BEFORE);
+    },
+    collect: (monitor) => {
+      return {
+        isOverBefore: monitor.isOver(),
+      };
+    },
+  });
+
+  const [{ isOverAfter }, dropRefAfter] = useDrop({
+    accept: "treeitem",
+    drop: (item) => {
+      console.log(`move ${item.id} to ${el.id}, after`);
+      moveElementFromTo(item.id, el.id, MOVE_ELEMENT_POSITION.AFTER);
+    },
+    collect: (monitor) => {
+      return {
+        isOverAfter: monitor.isOver(),
+      };
+    },
+  });
+
+  const [{ isOverInside }, dropRefInside] = useDrop({
+    accept: "treeitem",
+    drop: (item) => {
+      console.log(`move ${item.id} to ${el.id}, inside`);
+      moveElementFromTo(item.id, el.id, MOVE_ELEMENT_POSITION.INSIDE);
+    },
+    collect: (monitor) => {
+      return {
+        isOverInside: monitor.isOver(),
+      };
     },
   });
 
@@ -36,10 +66,12 @@ export default function ElementTreeItemSingle({
     el.classNames.forEach((name) => {
       elClassList += `.${name}`;
     });
+
   const activeClass = el.id === currentActive?.id ? "bg-gray-200" : "";
+
   const AlwaysVisible = (
     <div
-      className="border-b py-1 flex"
+      className="py-1 flex"
       onClick={() => {
         setCurrentActive(el);
       }}
@@ -111,25 +143,43 @@ export default function ElementTreeItemSingle({
   return (
     <li key={el.id} className={"text-xs " + activeClass}>
       <div
-        style={{ height: 10, backgroundColor: isOver ? "green" : "" }}
-        ref={dropRef}
+        className={isOverBefore && "bg-indigo-500"}
+        style={{ height: 4 }}
+        ref={dropRefBefore}
       />
       <CollapsableElement title={AlwaysVisible}>
         {el.children && (
-          <ElementTreeItem
-            {...{
-              childrenArray: el.children,
-              setCurrentActive,
-              currentActive,
-              addChildToElement,
-              removeElement,
-              moveElement,
-              moveElementFromTo,
-              cloneElement,
-            }}
-          />
+          <>
+            <div
+              className={isOverInside && "bg-indigo-500"}
+              style={{
+                height: 2,
+                width: "100%",
+                position: "absolute",
+                left: "1rem",
+              }}
+              ref={dropRefInside}
+            />
+            <ElementTreeItem
+              {...{
+                childrenArray: el.children,
+                setCurrentActive,
+                currentActive,
+                addChildToElement,
+                removeElement,
+                moveElement,
+                moveElementFromTo,
+                cloneElement,
+              }}
+            />
+          </>
         )}
       </CollapsableElement>
+      <div
+        className={isOverAfter && "bg-indigo-500"}
+        style={{ height: 4 }}
+        ref={dropRefAfter}
+      />
     </li>
   );
 }
