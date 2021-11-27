@@ -60,10 +60,6 @@ export default function InspectorPanel() {
     setCssClass(obj);
   };
 
-  /*useEffect(() => {
-    selectClass();
-  }, [addClassToElement]);*/
-
   return (
     <SelectClassContext.Provider value={selectClass}>
       <div className="w-96 flex-shrink-0 border-l shadow-xl overflow-auto bg-white">

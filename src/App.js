@@ -7,17 +7,23 @@ import { useState } from "react";
 
 export default function App() {
   const [responsiveWidth, setResponsiveWidth] = useState("100%");
+  const [hidePanels, setHidePanels] = useState(false);
 
   return (
     <div className="App flex flex-col h-screen bg-gray-100">
       <TopBar
         setResponsiveWidth={setResponsiveWidth}
         responsiveWidth={responsiveWidth}
+        setHidePanels={setHidePanels}
+        hidePanels={hidePanels}
       />
       <div className="flex h-20 flex-grow flex-shrink">
-        <LeftPanel />
-        <EditorCanvas responsiveWidth={responsiveWidth} />
-        <InspectorPanel />
+        {!hidePanels && <LeftPanel />}
+        <EditorCanvas
+          responsiveWidth={responsiveWidth}
+          hidePanels={hidePanels}
+        />
+        {!hidePanels && <InspectorPanel />}
       </div>
     </div>
   );

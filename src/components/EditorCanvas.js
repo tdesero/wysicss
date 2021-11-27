@@ -13,7 +13,7 @@ export default function EditorCanvas(props) {
     elements,
     currentActive,
     setCurrentActive,
-    changeElementText
+    changeElementText,
   } = useContext(Context);
 
   const [ref, setRef] = useState();
@@ -21,7 +21,7 @@ export default function EditorCanvas(props) {
     x: 0,
     y: 0,
     width: 0,
-    height: 0
+    height: 0,
   });
   // for
   const [scrollPos, setScrollPos] = useState(0);
@@ -32,7 +32,7 @@ export default function EditorCanvas(props) {
       box.y += scrollPos;
       setCurrentBox(box);
     }
-  }, [ref, classNames, props.responsiveWidth, elements]);
+  }, [ref, classNames, props.responsiveWidth, props.hidePanels, elements]);
 
   let classNamesCss = "";
   classNames.forEach((c) => {
@@ -112,7 +112,12 @@ export default function EditorCanvas(props) {
     });
 
   return (
-    <div className="w-full m-8 relative overflow-hidden">
+    <div
+      className={
+        "w-full relative overflow-hidden " +
+        (props.responsiveWidth === "100%" ? "border" : "m-8")
+      }
+    >
       <EditorIFrame
         onScroll={setScrollPos}
         className="bg-white shadow-lg max-w-full h-full m-auto"
@@ -122,19 +127,23 @@ export default function EditorCanvas(props) {
         <MouseOverRect>{childElements(elements)}</MouseOverRect>
         <style>{classNamesCss}</style>
       </EditorIFrame>
-      {/* current bounding box */}
-      <div className="absolute w-full h-full top-0 pointer-events-none">
-        <div
-          className="relative m-auto pointer-events-none"
-          style={{ width: props.responsiveWidth }}
-        >
-          <ActiveFrame
-            currentActive={currentActive}
-            currentBox={currentBox}
-            scrollPos={scrollPos}
-          />
-        </div>
-      </div>
+      {
+        /* current bounding box */
+        !props.hidePanels && (
+          <div className="absolute w-full h-full top-0 pointer-events-none">
+            <div
+              className="relative m-auto pointer-events-none"
+              style={{ width: props.responsiveWidth }}
+            >
+              <ActiveFrame
+                currentActive={currentActive}
+                currentBox={currentBox}
+                scrollPos={scrollPos}
+              />
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 }
