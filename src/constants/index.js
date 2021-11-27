@@ -58,7 +58,7 @@ export const DEFAULT_ELEMENTS = [
             id: "_pee8z2jje",
             classNames: [],
             children: [],
-            text: "I am a nice Website",
+            text: "Hello World",
           },
         ],
       },
