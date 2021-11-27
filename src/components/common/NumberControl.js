@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
+//TODO: add support for min and max values when dragging
 export default function NumberControl(props) {
   const [startValue, setStartValue] = useState(props.value);
   const ref = useRef();
@@ -40,6 +41,7 @@ export default function NumberControl(props) {
 
   return (
     <input
+      {...props}
       className="w-full"
       ref={ref}
       type="number"
@@ -50,7 +52,7 @@ export default function NumberControl(props) {
         props.onChange(e.target.value);
       }}
       style={{
-        cursor: direction === "x" ? "ew-resize" : "ns-resize"
+        cursor: direction === "x" ? "ew-resize" : "ns-resize",
       }}
     />
   );

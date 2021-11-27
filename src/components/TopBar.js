@@ -53,7 +53,7 @@ export default function TopBar({
           className={hidePanels && "text-white"}
           onClick={() => setHidePanels(!hidePanels)}
         >
-          <Icon.Maximize size={16} />
+          <Icon.Eye size={16} />
         </button>
       </div>
     </div>

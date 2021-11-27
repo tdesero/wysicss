@@ -124,7 +124,11 @@ export default function EditorCanvas(props) {
         style={{ width: props.responsiveWidth }}
       >
         <link rel="stylesheet" href="./reset.css" />
-        <MouseOverRect>{childElements(elements)}</MouseOverRect>
+        {props.hidePanels ? (
+          childElements(elements)
+        ) : (
+          <MouseOverRect>{childElements(elements)}</MouseOverRect>
+        )}
         <style>{classNamesCss}</style>
       </EditorIFrame>
       {

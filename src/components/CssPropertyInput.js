@@ -7,12 +7,19 @@ export default function CssPropertyInput({
   cssClass,
   label,
   direction,
+  hasUnit = true,
 
   ...props
 }) {
   const startValue = cssClass?.properties?.[propertyName]?.value || "";
   const [property, setProperty] = useState(startValue);
-  const startUnit = cssClass?.properties?.[propertyName]?.unit || "px";
+  let startUnit;
+  if (hasUnit) {
+    startUnit = cssClass?.properties?.[propertyName]?.unit || "px";
+  } else {
+    startUnit = "";
+  }
+
   const [unit, setUnit] = useState(startUnit);
 
   useEffect(() => {
@@ -23,7 +30,7 @@ export default function CssPropertyInput({
   return (
     <ContextConsumer>
       {({ updateClassProperty }) => (
-        <div className="border rounded p-2 my-1" {...props}>
+        <div className="border rounded p-2 my-1">
           <label className="text-xs block text-gray-400">{label}</label>
           <div className="flex">
             <NumberControl
@@ -33,36 +40,39 @@ export default function CssPropertyInput({
                 setProperty(val);
                 updateClassProperty(cssClass, propertyName, val, unit);
               }}
+              {...props}
             />
-            <select
-              className="text-xs text-gray-400 appearance-none w-4"
-              value={unit}
-              onChange={(e) => {
-                setUnit(e.target.value);
-                if (e.target.value === "auto") {
-                  setProperty("");
-                  updateClassProperty(
-                    cssClass,
-                    propertyName,
-                    "",
-                    e.target.value
-                  );
-                } else {
-                  updateClassProperty(
-                    cssClass,
-                    propertyName,
-                    property,
-                    e.target.value
-                  );
-                }
-              }}
-            >
-              {["px", "%", "em", "rem", "vh", "vw", "auto"].map((u) => (
-                <option key={u} value={u}>
-                  {u}
-                </option>
-              ))}
-            </select>
+            {hasUnit && (
+              <select
+                className="text-xs text-gray-400 appearance-none w-4"
+                value={unit}
+                onChange={(e) => {
+                  setUnit(e.target.value);
+                  if (e.target.value === "auto") {
+                    setProperty("");
+                    updateClassProperty(
+                      cssClass,
+                      propertyName,
+                      "",
+                      e.target.value
+                    );
+                  } else {
+                    updateClassProperty(
+                      cssClass,
+                      propertyName,
+                      property,
+                      e.target.value
+                    );
+                  }
+                }}
+              >
+                {["px", "%", "em", "rem", "vh", "vw", "auto"].map((u) => (
+                  <option key={u} value={u}>
+                    {u}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
         </div>
       )}

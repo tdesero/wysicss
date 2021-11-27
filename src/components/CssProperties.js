@@ -14,6 +14,7 @@ import {
   formatUnderline,
   formatUppercase,
   formatLowercase,
+  formatCapitalize,
   justifyCenter,
   justifySpaceBetween,
   justifyLeft,
@@ -86,6 +87,26 @@ const textDecorationProperty = {
     {
       value: "line-through",
       icon: <WPIcon fill="currentColor" icon={formatStrikethrough} size={20} />,
+    },
+  ],
+};
+
+const textTransformProperty = {
+  name: "text-transform",
+  options: [
+    /** TODO: Do I need this? 
+    { value: "none", icon: <Icon.X size={20} /> },*/
+    {
+      value: "uppercase",
+      icon: <WPIcon fill="currentColor" icon={formatUppercase} size={20} />,
+    },
+    {
+      value: "lowercase",
+      icon: <WPIcon fill="currentColor" icon={formatLowercase} size={20} />,
+    },
+    {
+      value: "capitalize",
+      icon: <WPIcon fill="currentColor" icon={formatCapitalize} size={20} />,
     },
   ],
 };
@@ -360,6 +381,35 @@ const imageProperties = [
   },
 ];
 
+const visbilityProperties = [
+  {
+    name: "visibility",
+    label: "Visibility",
+    options: [{ value: "hidden", icon: <Icon.EyeOff size={20} /> }],
+  },
+  {
+    name: "overflow-y",
+    label: "Overflow Y",
+    options: [
+      { value: "hidden", icon: <Icon.EyeOff size={20} /> },
+      { value: "scroll", icon: <Icon.ArrowDown size={20} /> },
+    ],
+  },
+  {
+    name: "overflow-x",
+    label: "Overflow X",
+    options: [
+      { value: "hidden", icon: <Icon.EyeOff size={20} /> },
+      { value: "scroll", icon: <Icon.ArrowRight size={20} /> },
+    ],
+  },
+];
+
+const opacityProperty = {
+  name: "opacity",
+  label: "Opacity",
+};
+
 export default function CssProperties({ cssClass, elementSelected }) {
   return (
     <div>
@@ -434,7 +484,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
               />
             ))}
           </div>
-          <div className="flex mb-3 gap-2">
+          <div className="flex gap-2">
             <CssPropertySelect
               propertyName={fontWeightProperty.name}
               label={fontWeightProperty.label}
@@ -449,6 +499,13 @@ export default function CssProperties({ cssClass, elementSelected }) {
             <CssPropertyIconButtonGroup
               propertyName={fontStyleProperty.name}
               options={fontStyleProperty.options}
+              cssClass={cssClass}
+            />
+          </div>
+          <div class="flex gap-2">
+            <CssPropertyIconButtonGroup
+              propertyName={textTransformProperty.name}
+              options={textTransformProperty.options}
               cssClass={cssClass}
             />
             <CssPropertyIconButtonGroup
@@ -579,6 +636,29 @@ export default function CssProperties({ cssClass, elementSelected }) {
             />
           ))}
         </div>
+      </Accordion>
+      <Accordion title="Visibility">
+        <div class="flex gap-2">
+          {visbilityProperties.map((p) => (
+            <div>
+              <CssPropertyIconButtonGroup
+                label={p.name}
+                propertyName={p.name}
+                options={p.options}
+                cssClass={cssClass}
+              />
+            </div>
+          ))}
+        </div>
+        <CssPropertyInput
+          propertyName={opacityProperty.name}
+          label={opacityProperty.label}
+          cssClass={cssClass}
+          hasUnit={false}
+          step="0.1"
+          min="0"
+          max="1"
+        />
       </Accordion>
     </div>
   );

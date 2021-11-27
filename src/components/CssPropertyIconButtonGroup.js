@@ -23,6 +23,7 @@ export default function CssPropertyIconButtonGroup({
           <div className="flex gap-2">
             {options.map((option) => (
               <button
+                title={label || propertyName}
                 className={
                   "p-1 border rounded my-1 " +
                   (option.value === property
