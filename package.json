@@ -10,6 +10,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@headlessui/react": "^1.4.2",
+    "bootstrap-icons": "^1.7.1",
     "highlight.js": "11.2.0",
     "js-beautify": "1.14.0",
     "lodash": "^4.17.21",

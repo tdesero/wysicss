@@ -1,8 +1,13 @@
 import CssPropertyInput from "./CssPropertyInput";
 import CssPropertyColorInput from "./CssPropertyColorInput";
 import CssPropertyButtonGroup from "./CssPropertyButtonGroup";
+import CssPropertyIconButtonGroup from "./CssPropertyIconButtonGroup";
 import CssPropertyTextInput from "./CssPropertyTextInput";
 import { Accordion } from "./common/Accordion";
+
+//Icons
+import * as Icon from "react-feather";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const dimensionProperties = [
   { name: "width", label: "Width", direction: "x" },
@@ -24,7 +29,28 @@ const fontProperties = [
 
 const textAlignProperty = {
   name: "text-align",
-  options: ["left", "center", "right"],
+  options: [
+    { value: "left", icon: <Icon.AlignLeft size={20} /> },
+    { value: "center", icon: <Icon.AlignCenter size={20} /> },
+    { value: "right", icon: <Icon.AlignRight size={20} /> },
+  ],
+};
+
+const fontStyleProperty = {
+  name: "font-style",
+  options: [
+    { value: "normal", icon: <Icon.X size={20} /> },
+    { value: "italic", icon: <Icon.Italic size={20} /> },
+  ],
+};
+
+const textDecorationProperty = {
+  name: "text-decoration",
+  options: [
+    { value: "none", icon: <Icon.X size={20} /> },
+    { value: "underline", icon: <Icon.Underline size={20} /> },
+    { value: "line-through", icon: <Icon.Minus size={20} /> },
+  ],
 };
 
 const fontFamilyProperty = { name: "font-family", label: "Font Family" };
@@ -89,35 +115,168 @@ const displayProperty = {
 const justifyContentProperty = {
   name: "justify-content",
   options: [
-    "flex-start",
-    "center",
-    "flex-end",
-    "space-between",
-    "space-around",
+    { value: "flex-start", icon: <i className="bi-align-start mx-1" /> },
+    { value: "center", icon: <i className="bi-align-center mx-1" /> },
+    { value: "flex-end", icon: <i className="bi-align-end mx-1" /> },
+    {
+      value: "space-between",
+      icon: <i className="bi-layout-three-columns mx-2" />,
+    },
+    {
+      value: "space-around",
+      icon: <i className="bi-distribute-horizontal mx-1" />,
+    },
   ],
 };
 
 const alignItemsProperty = {
   name: "align-items",
-  options: ["flex-start", "center", "flex-end", "stretch"],
+  options: [
+    {
+      value: "flex-start",
+      icon: <i className="bi-align-top mx-1" />,
+    },
+    { value: "center", icon: <i className="bi-align-middle mx-1" /> },
+    {
+      value: "flex-end",
+      icon: <i className="bi-align-bottom mx-1" />,
+    },
+    { value: "stretch", icon: <i className="bi-view-stacked mx-1" /> },
+  ],
 };
 
 const flexProperties = [
   {
     name: "flex-wrap",
-    options: ["no-wrap", "wrap"],
+    options: [
+      { value: "no-wrap", icon: <Icon.X size={20} /> },
+      { value: "wrap", icon: <Icon.Check size={20} /> },
+    ],
   },
   {
     name: "flex-grow",
-    options: ["0", "1"],
+    options: [
+      { value: "0", icon: <Icon.X size={20} /> },
+      { value: "1", icon: <Icon.Check size={20} /> },
+    ],
   },
   {
     name: "flex-shrink",
-    options: ["0", "1"],
+    options: [
+      { value: "0", icon: <Icon.X size={20} /> },
+      { value: "1", icon: <Icon.Check size={20} /> },
+    ],
   },
 ];
 
-export default function CssProperties({ cssClass }) {
+const imageProperties = [
+  {
+    name: "object-fit",
+    options: [
+      { value: "none", icon: <Icon.X size="20" /> },
+      {
+        value: "fill",
+        icon: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            fill="none"
+          >
+            <path
+              d=" M 3 4 L 3 4 L 3 4 L 3 4 L 3 4"
+              stroke-width="2"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              fill="none"
+            ></path>
+            <path
+              d=" M 2 5 L 2 19 L 22 19 L 22 5 L 2 5 Z"
+              stroke-width="2"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              fill="none"
+            ></path>
+            <path
+              d=" M 5 8 L 5 16 L 19 16 L 19 8 L 5 8 Z"
+              stroke-width="2"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              fill="currentColor"
+            ></path>
+          </svg>
+        ),
+      },
+      {
+        value: "cover",
+        icon: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            fill="none"
+          >
+            <path
+              d=" M 2 6 L 2 18 L 22 18 L 22 6 L 2 6 Z"
+              stroke-width="2"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              fill="none"
+            ></path>
+            <path
+              d=" M 18 2 L 6 2 L 6 22 L 18 22 L 18 2 Z"
+              stroke-width="2"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              fill="none"
+            ></path>
+            <path
+              d=" M 6 6 L 6 18 L 18 18 L 18 6 L 6 6 Z"
+              stroke-width="0"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              fill="currentColor"
+            ></path>
+          </svg>
+        ),
+      },
+      {
+        value: "contain",
+        icon: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            fill="none"
+          >
+            <path
+              d=" M 3 3 L 3 21 L 21 21 L 21 3 L 3 3 Z"
+              stroke-width="2"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              fill="none"
+            ></path>
+            <path
+              d=" M 2 7 L 2 17 L 22 17 L 22 7 L 2 7 Z"
+              stroke-width="0"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              fill="currentColor"
+            ></path>
+          </svg>
+        ),
+      },
+    ],
+  },
+];
+
+export default function CssProperties({ cssClass, elementSelected }) {
   return (
     <div>
       <Accordion title="Basic" isOpen={true}>
@@ -152,6 +311,20 @@ export default function CssProperties({ cssClass }) {
           ))}
         </div>
       </Accordion>
+      {elementSelected.tag === "img" && (
+        <Accordion title="Image Settings" isOpen={true}>
+          {imageProperties.map((p) => (
+            <div key={p.name}>
+              <CssPropertyIconButtonGroup
+                propertyName={p.name}
+                label={p.name}
+                options={p.options}
+                cssClass={cssClass}
+              />
+            </div>
+          ))}
+        </Accordion>
+      )}
       <Accordion title="Typography" isOpen={true}>
         <div className="mb-3">
           <div className="flex">
@@ -185,11 +358,23 @@ export default function CssProperties({ cssClass }) {
               cssClass={cssClass}
             />
           </div>
-          <div className="mb-3">
-            <p className="text-xs text-gray-400">Text Align</p>
-            <CssPropertyButtonGroup
+          <div className="flex mb-3">
+            <CssPropertyIconButtonGroup
+              label="Text Align"
               propertyName={textAlignProperty.name}
               options={textAlignProperty.options}
+              cssClass={cssClass}
+            />
+            <CssPropertyIconButtonGroup
+              label="Font Style"
+              propertyName={fontStyleProperty.name}
+              options={fontStyleProperty.options}
+              cssClass={cssClass}
+            />
+            <CssPropertyIconButtonGroup
+              label="Text Decoration"
+              propertyName={textDecorationProperty.name}
+              options={textDecorationProperty.options}
               cssClass={cssClass}
             />
           </div>
@@ -228,7 +413,7 @@ export default function CssProperties({ cssClass }) {
           <span className="text-xs text-gray-400">(Flex only)</span>
         </p>
         <div className="mb-3">
-          <CssPropertyButtonGroup
+          <CssPropertyIconButtonGroup
             propertyName={justifyContentProperty.name}
             options={justifyContentProperty.options}
             cssClass={cssClass}
@@ -238,7 +423,7 @@ export default function CssProperties({ cssClass }) {
           Align Items <span className="text-xs text-gray-400">(Flex only)</span>
         </p>
         <div className="mb-3">
-          <CssPropertyButtonGroup
+          <CssPropertyIconButtonGroup
             propertyName={alignItemsProperty.name}
             options={alignItemsProperty.options}
             cssClass={cssClass}
@@ -247,7 +432,7 @@ export default function CssProperties({ cssClass }) {
         <div className="flex mb-3">
           {flexProperties.map((p) => (
             <div className="w-1/3" key={p.name}>
-              <CssPropertyButtonGroup
+              <CssPropertyIconButtonGroup
                 propertyName={p.name}
                 label={p.name}
                 options={p.options}

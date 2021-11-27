@@ -19,7 +19,7 @@ export default function CssEditor({
   setVal,
   updatePseudoClass,
   updateClassText,
-  removeClassFromElement
+  removeClassFromElement,
 }) {
   const highlight = (txt) => {
     return hljs.highlight(txt, { language: "css" }).value;
@@ -60,7 +60,10 @@ export default function CssEditor({
       </div>
       {cssClass && elementSelected?.classNames?.length > 0 && (
         <>
-          <CssProperties cssClass={cssClass} />
+          <CssProperties
+            cssClass={cssClass}
+            elementSelected={elementSelected}
+          />
           <Accordion title="Additional CSS" isOpen={false}>
             {cssClass && (
               <div className="text-sm mb-2">
@@ -150,7 +153,7 @@ export default function CssEditor({
               padding={16}
               style={{
                 fontFamily: '"Fira code", "Fira Mono", monospace',
-                fontSize: 12
+                fontSize: 12,
               }}
             />
           </Accordion>

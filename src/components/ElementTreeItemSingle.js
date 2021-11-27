@@ -77,7 +77,7 @@ export default function ElementTreeItemSingle({
       }}
     >
       <div
-        className="flex rounded overflow-hidden mr-1"
+        className="flex rounded overflow-hidden flex-shrink-0 mr-1"
         style={{ maxWidth: 150 }}
       >
         <span className="pl-1 pr-2 bg-gray-300" ref={dragRef} draggable>
