@@ -9,6 +9,7 @@ import {
   DEFAULT_CLASSNAMES,
   MOVE_ELEMENT_POSITION,
 } from "./constants";
+var debounce = require("lodash/debounce");
 
 export const Context = createContext();
 
@@ -39,13 +40,7 @@ export class ContextProvider extends Component {
       currentActive: undefined,
       classNames: DEFAULT_CLASSNAMES,
       elements: DEFAULT_ELEMENTS,
-      history: [
-        {
-          //TODO: this is just a fallback initial history state
-          classNames: DEFAULT_CLASSNAMES,
-          elements: DEFAULT_ELEMENTS,
-        },
-      ],
+      history: [],
       historyPos: 0, //not active, negative is active
 
       // methods
@@ -108,9 +103,10 @@ export class ContextProvider extends Component {
       newClassNames[index] = { ...newClassNames[index], txt };
     }
 
-    //TODO: needs history but is updated very frequently
-
-    this.setState({ classNames: [...newClassNames] });
+    this.setState(
+      { classNames: [...newClassNames] },
+      this.debouncedAddToHistory
+    );
   }
 
   updateClassProperty(classNameObj, property, value, unit = "") {
@@ -129,9 +125,10 @@ export class ContextProvider extends Component {
       };
     }
 
-    //TODO: needs history but is updated very frequently
-
-    this.setState({ classNames: [...newClassNames] });
+    this.setState(
+      { classNames: [...newClassNames] },
+      this.debouncedAddToHistory
+    );
   }
 
   setCurrentActive(el) {
@@ -439,14 +436,22 @@ export class ContextProvider extends Component {
   }
 
   addToHistory() {
+    /* Attention: as immutable updates to the deep nested structure
+     * seem almost impossible to me i will just deep clone
+     * my state when adding it to history to provide a time travel mechanism
+     *
+     * TODO: How to debounce
+     */
     this.setState(
       {
         history: this.state.history
           .slice(0, this.state.history.length + this.state.historyPos)
-          .concat({
-            elements: this.state.elements,
-            classNames: this.state.classNames,
-          }),
+          .concat(
+            deepClone({
+              elements: this.state.elements,
+              classNames: this.state.classNames,
+            })
+          ),
         historyPos: 0,
       },
       () => {
@@ -455,15 +460,24 @@ export class ContextProvider extends Component {
     );
   }
 
+  debouncedAddToHistory = debounce(this.addToHistory, 500);
+
   historyMove(step) {
     const newHistoryPos = this.state.historyPos + step;
     const pos = this.state.history.length - 1 + newHistoryPos;
 
+    /* Attention: atm state needs to be deep cloned here as well.
+     * Otherwise it will lead to bugs as state in this class is not updated with real immutability
+     */
     this.setState({
-      classNames: this.state.history[pos].classNames,
-      elements: this.state.history[pos].elements,
+      classNames: deepClone(this.state.history[pos].classNames),
+      elements: deepClone(this.state.history[pos].elements),
       historyPos: newHistoryPos,
     });
+  }
+
+  componentDidMount() {
+    this.addToHistory();
   }
 
   render() {
