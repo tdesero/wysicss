@@ -23,7 +23,7 @@ export default function CssPropertyInput({
   return (
     <ContextConsumer>
       {({ updateClassProperty }) => (
-        <div className="border rounded p-2 my-1 mr-2" {...props}>
+        <div className="border rounded p-2 my-1" {...props}>
           <label className="text-xs block text-gray-400">{label}</label>
           <div className="flex">
             <NumberControl

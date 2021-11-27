@@ -12,7 +12,7 @@ export default function CssPropertyInput({ propertyName, cssClass, label }) {
   return (
     <ContextConsumer>
       {({ updateClassProperty }) => (
-        <div className="border rounded p-2 my-1 mr-2 w-full">
+        <div className="border rounded p-2 my-1 w-full">
           <label className="text-xs block text-gray-400">
             {label}
             <button

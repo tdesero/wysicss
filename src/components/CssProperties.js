@@ -7,7 +7,24 @@ import { Accordion } from "./common/Accordion";
 
 //Icons
 import * as Icon from "react-feather";
+import {
+  Icon as WPIcon,
+  formatStrikethrough,
+  formatItalic,
+  formatUnderline,
+  formatUppercase,
+  formatLowercase,
+  justifyCenter,
+  justifySpaceBetween,
+  justifyLeft,
+  justifyRight,
+  alignLeft,
+  alignCenter,
+  alignRight,
+  columns,
+} from "@wordpress/icons";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import CssPropertySelect from "./CssPropertySelect";
 
 const dimensionProperties = [
   { name: "width", label: "Width", direction: "x" },
@@ -30,26 +47,46 @@ const fontProperties = [
 const textAlignProperty = {
   name: "text-align",
   options: [
-    { value: "left", icon: <Icon.AlignLeft size={20} /> },
-    { value: "center", icon: <Icon.AlignCenter size={20} /> },
-    { value: "right", icon: <Icon.AlignRight size={20} /> },
+    {
+      value: "left",
+      icon: <WPIcon fill="currentColor" icon={alignLeft} size={20} />,
+    },
+    {
+      value: "center",
+      icon: <WPIcon fill="currentColor" icon={alignCenter} size={20} />,
+    },
+    {
+      value: "right",
+      icon: <WPIcon fill="currentColor" icon={alignRight} size={20} />,
+    },
   ],
 };
 
 const fontStyleProperty = {
   name: "font-style",
   options: [
-    { value: "normal", icon: <Icon.X size={20} /> },
-    { value: "italic", icon: <Icon.Italic size={20} /> },
+    /** TODO: Do i need this?
+    { value: "normal", icon: <Icon.X size={20} /> }, */
+    {
+      value: "italic",
+      icon: <WPIcon fill="currentColor" icon={formatItalic} size={20} />,
+    },
   ],
 };
 
 const textDecorationProperty = {
   name: "text-decoration",
   options: [
-    { value: "none", icon: <Icon.X size={20} /> },
-    { value: "underline", icon: <Icon.Underline size={20} /> },
-    { value: "line-through", icon: <Icon.Minus size={20} /> },
+    /** TODO: Do I need this? 
+    { value: "none", icon: <Icon.X size={20} /> },*/
+    {
+      value: "underline",
+      icon: <WPIcon fill="currentColor" icon={formatUnderline} size={20} />,
+    },
+    {
+      value: "line-through",
+      icon: <WPIcon fill="currentColor" icon={formatStrikethrough} size={20} />,
+    },
   ],
 };
 
@@ -59,8 +96,18 @@ const fontColorProperty = { name: "color", label: "Text Color" };
 
 const fontWeightProperty = {
   name: "font-weight",
-  label: "Font Family",
-  options: ["100", "200", "300", "400", "500", "600", "700"],
+  label: "Font Weight",
+  options: [
+    { value: "100", label: "Thin" },
+    { value: "200", label: "Extra Light" },
+    { value: "300", label: "Light" },
+    { value: "400", label: "Regular" },
+    { value: "500", label: "Medium" },
+    { value: "600", label: "Semi Bold" },
+    { value: "700", label: "Bold" },
+    { value: "800", label: "Extra Bold" },
+    { value: "900", label: "Black" },
+  ],
 };
 
 const PaddingProperties = [
@@ -115,17 +162,27 @@ const displayProperty = {
 const justifyContentProperty = {
   name: "justify-content",
   options: [
-    { value: "flex-start", icon: <i className="bi-align-start mx-1" /> },
-    { value: "center", icon: <i className="bi-align-center mx-1" /> },
-    { value: "flex-end", icon: <i className="bi-align-end mx-1" /> },
+    {
+      value: "flex-start",
+      icon: <WPIcon fill="currentColor" icon={justifyLeft} size={20} />,
+    },
+    {
+      value: "center",
+      icon: <WPIcon fill="currentColor" icon={justifyCenter} size={20} />,
+    },
+    {
+      value: "flex-end",
+      icon: <WPIcon fill="currentColor" icon={justifyRight} size={20} />,
+    },
     {
       value: "space-between",
-      icon: <i className="bi-layout-three-columns mx-2" />,
+      icon: <WPIcon fill="currentColor" icon={justifySpaceBetween} size={20} />,
     },
+    /* I don't have a icon for this and you probably wont need it anyway...
     {
       value: "space-around",
-      icon: <i className="bi-distribute-horizontal mx-1" />,
-    },
+      icon: <WPIcon icon={justifySpaceBetween} size={20} />,
+    },*/
   ],
 };
 
@@ -134,14 +191,41 @@ const alignItemsProperty = {
   options: [
     {
       value: "flex-start",
-      icon: <i className="bi-align-top mx-1" />,
+      icon: (
+        <WPIcon
+          fill="currentColor"
+          className="transform rotate-90"
+          icon={justifyLeft}
+          size={20}
+        />
+      ),
     },
-    { value: "center", icon: <i className="bi-align-middle mx-1" /> },
+    {
+      value: "center",
+      icon: (
+        <WPIcon
+          fill="currentColor"
+          className="transform rotate-90"
+          icon={justifyCenter}
+          size={20}
+        />
+      ),
+    },
     {
       value: "flex-end",
-      icon: <i className="bi-align-bottom mx-1" />,
+      icon: (
+        <WPIcon
+          fill="currentColor"
+          className="transform rotate-90"
+          icon={justifyRight}
+          size={20}
+        />
+      ),
     },
-    { value: "stretch", icon: <i className="bi-view-stacked mx-1" /> },
+    {
+      value: "stretch",
+      icon: <WPIcon fill="currentColor" icon={columns} size={20} />,
+    },
   ],
 };
 
@@ -280,7 +364,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
   return (
     <div>
       <Accordion title="Basic" isOpen={true}>
-        <div className="flex">
+        <div className="flex gap-2">
           {colorProperties.map((p) => (
             <CssPropertyColorInput
               key={p.name}
@@ -299,7 +383,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
             />
           ))}
         </div>
-        <div className="flex mb-3">
+        <div className="flex gap-2 mb-3">
           {dimensionMinMaxProperties.map((p) => (
             <CssPropertyInput
               key={p.name}
@@ -327,7 +411,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
       )}
       <Accordion title="Typography" isOpen={true}>
         <div className="mb-3">
-          <div className="flex">
+          <div className="flex gap-2">
             <CssPropertyTextInput
               propertyName={fontFamilyProperty.name}
               label={fontFamilyProperty.label}
@@ -339,7 +423,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
               cssClass={cssClass}
             />
           </div>
-          <div className="flex">
+          <div className="flex gap-2">
             {fontProperties.map((p) => (
               <CssPropertyInput
                 key={p.name}
@@ -350,29 +434,24 @@ export default function CssProperties({ cssClass, elementSelected }) {
               />
             ))}
           </div>
-          <div>
-            <p className="text-xs text-gray-400">Font Weight</p>
-            <CssPropertyButtonGroup
+          <div className="flex mb-3 gap-2">
+            <CssPropertySelect
               propertyName={fontWeightProperty.name}
+              label={fontWeightProperty.label}
               options={fontWeightProperty.options}
               cssClass={cssClass}
             />
-          </div>
-          <div className="flex mb-3">
             <CssPropertyIconButtonGroup
-              label="Text Align"
               propertyName={textAlignProperty.name}
               options={textAlignProperty.options}
               cssClass={cssClass}
             />
             <CssPropertyIconButtonGroup
-              label="Font Style"
               propertyName={fontStyleProperty.name}
               options={fontStyleProperty.options}
               cssClass={cssClass}
             />
             <CssPropertyIconButtonGroup
-              label="Text Decoration"
               propertyName={textDecorationProperty.name}
               options={textDecorationProperty.options}
               cssClass={cssClass}
@@ -381,14 +460,14 @@ export default function CssProperties({ cssClass, elementSelected }) {
         </div>
       </Accordion>
       <Accordion title="Position" isOpen={false}>
-        <div className="flex">
+        <div className="flex gap-2">
           <CssPropertyButtonGroup
             propertyName={positionProperty.name}
             options={positionProperty.options}
             cssClass={cssClass}
           />
         </div>
-        <div className="flex mb-3">
+        <div className="flex gap-2 mb-3">
           {positionDirectionProperties.map((p) => (
             <CssPropertyInput
               key={p.name}
@@ -408,26 +487,28 @@ export default function CssProperties({ cssClass, elementSelected }) {
             cssClass={cssClass}
           />
         </div>
-        <p className="text-sm mb-2">
-          Justify Content{" "}
-          <span className="text-xs text-gray-400">(Flex only)</span>
-        </p>
-        <div className="mb-3">
-          <CssPropertyIconButtonGroup
-            propertyName={justifyContentProperty.name}
-            options={justifyContentProperty.options}
-            cssClass={cssClass}
-          />
-        </div>
-        <p className="text-sm mb-2">
-          Align Items <span className="text-xs text-gray-400">(Flex only)</span>
-        </p>
-        <div className="mb-3">
-          <CssPropertyIconButtonGroup
-            propertyName={alignItemsProperty.name}
-            options={alignItemsProperty.options}
-            cssClass={cssClass}
-          />
+        <div className="flex gap-2">
+          <div className="mb-3">
+            <p className="text-sm mb-2">
+              Justify <span className="text-xs text-gray-400">(Flex only)</span>
+            </p>
+
+            <CssPropertyIconButtonGroup
+              propertyName={justifyContentProperty.name}
+              options={justifyContentProperty.options}
+              cssClass={cssClass}
+            />
+          </div>
+          <div className="mb-3">
+            <p className="text-sm mb-2">
+              Align <span className="text-xs text-gray-400">(Flex only)</span>
+            </p>
+            <CssPropertyIconButtonGroup
+              propertyName={alignItemsProperty.name}
+              options={alignItemsProperty.options}
+              cssClass={cssClass}
+            />
+          </div>
         </div>
         <div className="flex mb-3">
           {flexProperties.map((p) => (
@@ -444,7 +525,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
       </Accordion>
       <Accordion title="Spacing" isOpen={false}>
         <p className="text-sm mb-2">Padding</p>
-        <div className="flex mb-3">
+        <div className="flex gap-2 mb-3">
           {PaddingProperties.map((p) => (
             <CssPropertyInput
               key={p.name}
@@ -456,7 +537,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
           ))}
         </div>
         <p className="text-sm mb-2">Margin</p>
-        <div className="flex mb-3">
+        <div className="flex gap-2 mb-3">
           {marginProperties.map((p) => (
             <CssPropertyInput
               key={p.name}
@@ -475,7 +556,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
           cssClass={cssClass}
         />
         <p className="text-sm mb-2">Border Radius</p>
-        <div className="flex mb-3">
+        <div className="flex gap-2 mb-3">
           {borderRadiusProperties.map((p) => (
             <CssPropertyInput
               key={p.name}
@@ -487,7 +568,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
           ))}
         </div>
         <p className="text-sm mb-2">Border Width</p>
-        <div className="flex mb-3">
+        <div className="flex gap-2 mb-3">
           {borderWidthProperties.map((p) => (
             <CssPropertyInput
               key={p.name}

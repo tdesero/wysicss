@@ -6,7 +6,7 @@ export default function CssPropertyButtonGroup({
   propertyName,
   cssClass,
   options,
-  label
+  label,
 }) {
   const startValue = cssClass?.properties?.[propertyName]?.value || 0;
   const [property, setProperty] = useState(startValue);
@@ -26,8 +26,9 @@ export default function CssPropertyButtonGroup({
               isActive={option === property}
               value={property}
               onClick={() => {
-                setProperty(option);
-                updateClassProperty(cssClass, propertyName, option);
+                const newValue = option === property ? "" : option;
+                setProperty(newValue);
+                updateClassProperty(cssClass, propertyName, newValue);
               }}
             >
               {option}

@@ -10,6 +10,7 @@
   "main": "src/index.js",
   "dependencies": {
     "@headlessui/react": "^1.4.2",
+    "@wordpress/icons": "^6.1.1",
     "bootstrap-icons": "^1.7.1",
     "highlight.js": "11.2.0",
     "js-beautify": "1.14.0",

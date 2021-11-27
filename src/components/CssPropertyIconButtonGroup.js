@@ -18,27 +18,29 @@ export default function CssPropertyIconButtonGroup({
   return (
     <ContextConsumer>
       {({ updateClassProperty }) => (
-        <div className="flex-1">
+        <>
           {label && <p className="text-xs text-gray-400 mb-1">{label}</p>}
-          <div>
+          <div className="flex gap-2">
             {options.map((option) => (
               <button
                 className={
-                  "p-1 border rounded mr-1 " +
+                  "p-1 border rounded my-1 " +
                   (option.value === property
                     ? "bg-indigo-500 text-white"
                     : "text-gray-700")
                 }
                 onClick={() => {
-                  setProperty(option.value);
-                  updateClassProperty(cssClass, propertyName, option.value);
+                  const newValue =
+                    option.value === property ? "" : option.value;
+                  setProperty(newValue);
+                  updateClassProperty(cssClass, propertyName, newValue);
                 }}
               >
                 {option.icon}
               </button>
             ))}
           </div>
-        </div>
+        </>
       )}
     </ContextConsumer>
   );
