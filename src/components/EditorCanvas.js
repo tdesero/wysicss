@@ -32,7 +32,14 @@ export default function EditorCanvas(props) {
       box.y += scrollPos;
       setCurrentBox(box);
     }
-  }, [ref, classNames, props.responsiveWidth, props.hidePanels, elements]);
+  }, [
+    ref,
+    classNames,
+    props.responsiveWidth,
+    props.hidePanels,
+    elements,
+    scrollPos,
+  ]);
 
   let classNamesCss = "";
   classNames.forEach((c) => {
@@ -127,7 +134,9 @@ export default function EditorCanvas(props) {
         {props.hidePanels ? (
           childElements(elements)
         ) : (
-          <MouseOverRect>{childElements(elements)}</MouseOverRect>
+          <MouseOverRect scrollPos={scrollPos}>
+            {childElements(elements)}
+          </MouseOverRect>
         )}
         <style>{classNamesCss}</style>
       </EditorIFrame>

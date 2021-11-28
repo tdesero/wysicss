@@ -35,6 +35,7 @@ export class ContextProvider extends Component {
     this.importJSON = this.importJSON.bind(this);
     this.moveElementFromTo = this.moveElementFromTo.bind(this);
     this.historyMove = this.historyMove.bind(this);
+    this.selectParent = this.selectParent.bind(this);
 
     this.state = {
       currentActive: undefined,
@@ -62,6 +63,7 @@ export class ContextProvider extends Component {
       cloneElement: this.cloneElement,
       importJSON: this.importJSON,
       historyMove: this.historyMove,
+      selectParent: this.selectParent,
 
       //getters
       getClassByName: this.getClassByName,
@@ -137,6 +139,14 @@ export class ContextProvider extends Component {
     } else {
       this.setState({ currentActive: false });
     }
+  }
+
+  selectParent(childID) {
+    const found = findParentAndIndexInElements(this.state.elements, childID);
+
+    parent = found ? found.parent : undefined;
+
+    this.setCurrentActive(parent);
   }
 
   addClassToElement(id, className) {

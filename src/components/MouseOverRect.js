@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const MouseOverRect = ({ children }) => {
+const MouseOverRect = ({ children, scrollPos }) => {
   const [rect, setRect] = useState({});
   const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setShow(false);
+  }, [scrollPos]);
+
   return (
     <div
       onMouseMove={(e) => {
         const box = e.target.getBoundingClientRect();
         setRect(box);
+        setShow(true);
       }}
       onMouseEnter={() => {
         setShow(true);
@@ -25,7 +32,7 @@ const MouseOverRect = ({ children }) => {
             left: rect.left,
             top: rect.top,
             height: rect.height,
-            width: rect.width
+            width: rect.width,
           }}
         />
       )}

@@ -4,7 +4,10 @@ export default function CollapsableElement({ isOpen = true, ...props }) {
   const [open, setOpen] = useState(isOpen);
   return (
     <div className="relative" {...props}>
-      <button className="absolute -left-3 top-1" onClick={() => setOpen(!open)}>
+      <button
+        className="absolute -left-4 top-1 px-1"
+        onClick={() => setOpen(!open)}
+      >
         {open ? "-" : "+"}
       </button>
       {props.title}

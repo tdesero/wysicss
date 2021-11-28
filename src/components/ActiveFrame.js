@@ -9,6 +9,7 @@ export default function ActiveFrame({ currentBox, scrollPos }) {
     moveElement,
     cloneElement,
     addChildToElement,
+    selectParent,
   } = useContext(Context);
 
   const cloneCurrentElement = () => cloneElement(currentActive.id);
@@ -17,10 +18,11 @@ export default function ActiveFrame({ currentBox, scrollPos }) {
   const addChild = () => addChildToElement(currentActive.id, "div");
   const addText = () => addChildToElement(currentActive.id, false);
   const deleteElement = () => removeElement(currentActive.id);
+  const selectParentEl = () => selectParent(currentActive.id);
 
   return (
     <>
-      {currentActive && currentActive.id && (
+      {currentActive && currentActive.id && currentActive.tag && (
         <div
           className="border-2 border-indigo-500"
           style={{
@@ -36,49 +38,65 @@ export default function ActiveFrame({ currentBox, scrollPos }) {
           <div
             style={{
               pointerEvents: "auto",
-              transform: currentBox.y > 20 ? "translateY(-100%)" : "none",
+              margin: "-2px", //negative border
+              transform:
+                currentBox.y > 20 ? "translateY(-100%)" : "translateY(100%)",
             }}
-            className="absolute left-0 top-0 inline-flex p-1 text-xs text-white bg-indigo-500"
+            className={
+              "absolute inline-flex " +
+              (currentBox.x > 300 ? "right-0 " : "left-0 ") +
+              (currentBox.y > 20 ? "top-0" : "bottom-0") +
+              " gap-1 text-xs text-white bg-indigo-500"
+            }
           >
-            <span
-              className="mr-2 w-14 overflow-hidden whitespace-nowrap overflow-ellipsis"
-              title={
-                currentActive.tag + "." + currentActive.classNames.join(".")
-              }
-            >
-              {currentActive.tag}.{currentActive.classNames.join(".")}
-            </span>
-            <button onClick={cloneCurrentElement}>
-              <Icon.Copy size={12} />
-            </button>
-            <button onClick={moveUp}>
-              <Icon.ArrowUp size={12} />
-            </button>
-            <button onClick={moveDown}>
-              <Icon.ArrowDown size={12} />
-            </button>
-            <button onClick={deleteElement}>
-              <Icon.Trash size={12} />
-            </button>
-          </div>
-          {currentBox.width > 180 && currentBox.height > 50 && (
-            <div className="absolute top-0 left-0 w-full flex justify-end p-2">
-              <button
-                style={{ pointerEvents: "auto" }}
-                onClick={addChild}
-                className="bg-indigo-500 text-white text-xs py-1 px-3 rounded-l border-r border-indigo-600"
-              >
-                + DIV
-              </button>
-              <button
-                style={{ pointerEvents: "auto" }}
-                onClick={addText}
-                className="bg-indigo-500 text-white text-xs py-1 px-3 rounded-r"
-              >
-                + Text
+            <div className="p-1 bg-indigo-600 flex items-center">
+              <button onClick={selectParentEl}>
+                <Icon.ArrowUpLeft size={12} />
               </button>
             </div>
-          )}
+            <div className="flex p-1">
+              <span
+                className="mr-2 w-12 overflow-hidden whitespace-nowrap overflow-ellipsis"
+                title={
+                  currentActive.tag + "." + currentActive.classNames?.join(".")
+                }
+              >
+                {currentActive.tag}.{currentActive.classNames?.join(".")}
+              </span>
+              <button onClick={cloneCurrentElement}>
+                <Icon.Copy size={12} />
+              </button>
+              <button onClick={moveUp}>
+                <Icon.ArrowUp size={12} />
+              </button>
+              <button onClick={moveDown}>
+                <Icon.ArrowDown size={12} />
+              </button>
+              <button onClick={deleteElement}>
+                <Icon.Trash size={12} />
+              </button>
+            </div>
+            {currentBox.width > 180 && currentBox.height > 50 && (
+              <div class="bg-indigo-800 flex p-1">
+                <button
+                  style={{ pointerEvents: "auto" }}
+                  onClick={addChild}
+                  className="flex items-center"
+                >
+                  <Icon.Plus size={12} />
+                  <Icon.Square size={12} />
+                </button>
+                <button
+                  style={{ pointerEvents: "auto" }}
+                  onClick={addText}
+                  className="flex items-center"
+                >
+                  <Icon.Plus size={12} />
+                  <Icon.Type size={12} />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </>
