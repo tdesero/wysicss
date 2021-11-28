@@ -144,7 +144,7 @@ export default function ElementTreeItemSingle({
   return (
     <li key={el.id} className={"text-xs " + activeClass}>
       <div
-        className={isOverBefore && "bg-indigo-500"}
+        className={isOverBefore ? "bg-indigo-500" : undefined}
         style={{ height: 4 }}
         ref={dropRefBefore}
       />
@@ -152,7 +152,7 @@ export default function ElementTreeItemSingle({
         {el.children && (
           <>
             <div
-              className={isOverInside && "bg-indigo-500"}
+              className={isOverInside ? "bg-indigo-500" : undefined}
               style={{
                 height: 2,
                 width: "100%",
@@ -177,7 +177,7 @@ export default function ElementTreeItemSingle({
         )}
       </CollapsableElement>
       <div
-        className={isOverAfter && "bg-indigo-500"}
+        className={isOverAfter ? "bg-indigo-500" : undefined}
         style={{ height: 4 }}
         ref={dropRefAfter}
       />

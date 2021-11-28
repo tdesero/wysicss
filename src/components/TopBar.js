@@ -20,7 +20,7 @@ export default function TopBar({
             </button>
           )}
         </div>
-        <div class="w-8">
+        <div className="w-8">
           {historyPos < 0 && (
             <button onClick={() => historyMove(+1)}>
               <Icon.CornerUpRight size={16} />
@@ -50,7 +50,7 @@ export default function TopBar({
       </div>
       <div className="flex items-center justify-end px-4">
         <button
-          className={hidePanels && "text-white"}
+          className={hidePanels ? "text-white" : undefined}
           onClick={() => setHidePanels(!hidePanels)}
         >
           <Icon.Eye size={16} />
