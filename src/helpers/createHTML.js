@@ -53,7 +53,8 @@ export default function createHTML({ classNames, elements }) {
   const cssReset = `
   html,
   body {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 
   *,
@@ -70,7 +71,10 @@ export default function createHTML({ classNames, elements }) {
     return (
       <>
         {childElements(elements)}
-        <style id="css-reset">{cssReset}</style>
+        <style
+          id="css-reset"
+          dangerouslySetInnerHTML={{ __html: cssReset }}
+        ></style>
         <style>{classNamesCss}</style>
       </>
     );

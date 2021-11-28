@@ -92,7 +92,7 @@ export default function EditorCanvas(props) {
             />
           ) : (
             <TagName>
-              {el.text && (
+              {el.text !== undefined && (
                 <ContentEditable
                   html={el.text}
                   onChange={(e) => {
