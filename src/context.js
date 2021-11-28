@@ -76,9 +76,7 @@ export class ContextProvider extends Component {
     }
     const newClassObj = { name: makeSafeForCSS(className), txt: "" };
     const newClassNames = [...this.state.classNames, newClassObj];
-    this.setState({ classNames: newClassNames }, () => {
-      this.addToHistory();
-    });
+    this.setState({ classNames: newClassNames }, this.addToHistory);
 
     return newClassObj;
   }
@@ -90,9 +88,7 @@ export class ContextProvider extends Component {
       newClassNames.splice(index, 1);
     }
 
-    this.setState({ classNames: newClassNames }, () => {
-      this.addToHistory();
-    });
+    this.setState({ classNames: newClassNames }, this.addToHistory);
   }
 
   updateClassText(classNameObj, txt) {
@@ -164,9 +160,7 @@ export class ContextProvider extends Component {
       }
     }
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   removeClassFromElement(id, className) {
@@ -181,9 +175,7 @@ export class ContextProvider extends Component {
       }
     }
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   addChildToElement(id, tagName) {
@@ -209,9 +201,7 @@ export class ContextProvider extends Component {
     }
     this.setCurrentActive(child);
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   removeElement(id) {
@@ -232,9 +222,7 @@ export class ContextProvider extends Component {
       found.parent.children && found.parent.children.splice(found.index, 1);
     }
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   changeElementText(id, txt) {
@@ -243,9 +231,7 @@ export class ContextProvider extends Component {
 
     el.text = txt;
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   changeElementSrc(id, url) {
@@ -254,9 +240,7 @@ export class ContextProvider extends Component {
 
     el.src = url;
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   // add pseudo like :hover, :before ...
@@ -270,9 +254,7 @@ export class ContextProvider extends Component {
       newClassNames[index] = { ...newClassNames[index], [pseudo]: txt };
     }
 
-    this.setState({ classNames: [...newClassNames] }, () => {
-      this.addToHistory();
-    });
+    this.setState({ classNames: [...newClassNames] }, this.addToHistory);
   }
 
   changeElementTag(id, txt) {
@@ -281,9 +263,7 @@ export class ContextProvider extends Component {
 
     el.tag = txt;
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   getClassByName(name) {
@@ -320,9 +300,7 @@ export class ContextProvider extends Component {
     }
     moveItem(from, to);
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   moveElementFromTo(fromID, toID, position) {
@@ -386,9 +364,7 @@ export class ContextProvider extends Component {
     }
     moveItem(from, to);
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   cloneElement(id) {
@@ -422,9 +398,7 @@ export class ContextProvider extends Component {
     }
     console.log(id, cloned);
 
-    this.setState({ elements }, () => {
-      this.addToHistory();
-    });
+    this.setState({ elements }, this.addToHistory);
   }
 
   importJSON(e) {
@@ -435,9 +409,7 @@ export class ContextProvider extends Component {
       const json = JSON.parse(event.target.result);
       const { classNames, elements } = json;
 
-      this.addToHistory();
-
-      that.setState({ classNames, elements });
+      that.setState({ classNames, elements }, this.addToHistory);
     };
     reader.onerror = (error) => {
       console.log(error);
