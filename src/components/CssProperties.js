@@ -637,7 +637,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
           ))}
         </div>
       </Accordion>
-      <Accordion title="Visibility">
+      <Accordion title="Visibility" isOpen={false}>
         <div class="flex gap-2">
           {visbilityProperties.map((p) => (
             <div>
