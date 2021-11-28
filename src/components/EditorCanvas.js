@@ -69,38 +69,27 @@ export default function EditorCanvas(props) {
       return (
         <Fragment key={el.id}>
           {TagName !== Fragment ? (
-            <>
-              {TagName !== "img" ? (
-                <TagName
-                  ref={(newRef) => {
-                    if (el.id === currentActive?.id) {
-                      setRef(newRef);
-                    }
-                  }}
-                  className={el.classNames && elClassList}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentActive(el);
-                  }}
-                >
-                  {el.children && childElements(el.children)}
-                </TagName>
-              ) : (
-                <TagName
-                  className={el.classNames && elClassList}
-                  ref={(newRef) => {
-                    if (el.id === currentActive?.id) {
-                      setRef(newRef);
-                    }
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentActive(el);
-                  }}
-                  src={el.src}
-                />
-              )}
-            </>
+            <TagName
+              draggable={
+                false /*if i want to add drag and drop i should add it on the "ActiveFrame" Layer*/
+              }
+              ref={(newRef) => {
+                if (el.id === currentActive?.id) {
+                  setRef(newRef);
+                }
+              }}
+              className={el.classNames && elClassList}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentActive(el);
+              }}
+              children={
+                el.children && TagName !== "img"
+                  ? childElements(el.children)
+                  : undefined
+              }
+              src={TagName === "img" ? el.src : undefined}
+            />
           ) : (
             <TagName>
               {el.text && (
@@ -108,6 +97,9 @@ export default function EditorCanvas(props) {
                   html={el.text}
                   onChange={(e) => {
                     changeElementText(el.id, e.target.value);
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault();
                   }}
                   tagName="span"
                 ></ContentEditable>
