@@ -40,7 +40,12 @@ export default function ActiveFrame({ currentBox, scrollPos }) {
             }}
             className="absolute left-0 top-0 inline-flex p-1 text-xs text-white bg-indigo-500"
           >
-            <span className="mr-2 w-14 overflow-hidden">
+            <span
+              className="mr-2 w-14 overflow-hidden whitespace-nowrap overflow-ellipsis"
+              title={
+                currentActive.tag + "." + currentActive.classNames.join(".")
+              }
+            >
               {currentActive.tag}.{currentActive.classNames.join(".")}
             </span>
             <button onClick={cloneCurrentElement}>

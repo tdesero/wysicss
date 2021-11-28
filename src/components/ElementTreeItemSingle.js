@@ -1,5 +1,6 @@
 import CollapsableElement from "./common/CollapsableElement";
 import * as Icon from "react-feather";
+import { Icon as WPIcon, dragHandle } from "@wordpress/icons";
 import { useDrag, useDrop } from "react-dnd";
 import ElementTreeItem from "./ElementTreeItem";
 import { MOVE_ELEMENT_POSITION } from "../constants";
@@ -81,8 +82,8 @@ export default function ElementTreeItemSingle({
         style={{ maxWidth: 150 }}
       >
         <span className="pl-1 pr-2 bg-gray-300" ref={dragRef} draggable>
-          <span className="inline">
-            <Icon.Move size={8} className="inline-block mr-1" />
+          <span className="inline-flex">
+            <WPIcon className="inline-block mr-1" icon={dragHandle} size={8} />
           </span>
           {el.tag ? el.tag : "text: "}
           {el.text && el.text}
