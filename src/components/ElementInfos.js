@@ -1,7 +1,21 @@
 import { useState } from "react";
 import FormGroup from "./common/FormGroup";
 
-const ALLOWED_TAGS = ["div", "span", "ul", "li", "nav", "main", "a", "p"];
+const ALLOWED_TAGS = [
+  "div",
+  "span",
+  "ul",
+  "li",
+  "nav",
+  "main",
+  "a",
+  "p",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+];
 
 export default function ElementInfos({
   elementSelected,
@@ -9,7 +23,7 @@ export default function ElementInfos({
   setText,
   changeElementText,
   changeElementTag,
-  changeElementSrc
+  changeElementSrc,
 }) {
   const [tag, setTag] = useState(elementSelected && elementSelected.tag);
   const [src, setSrc] = useState(
