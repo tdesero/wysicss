@@ -15,17 +15,21 @@ body {
   border-color: currentColor;
 }
 
-div[class=""] {
+div[class=""]:empty {
   min-height: 50px;
   min-width: 50px;
   background-color: rgba(99, 102, 241, 0.6);
   color: white;
   padding: 16px;
-  padding-top: 32px;
 }
 
-div[class=""]:before {
+div[class=""]:empty:before {
   content: "Add a class with styles to this Element";
   font-size: 12px;
   font-weight: normal;
+}
+
+span[contenteditable]:empty::before {
+  content: "Write some Text";
+  color: rgba(0, 0, 0, 0.2);
 }
