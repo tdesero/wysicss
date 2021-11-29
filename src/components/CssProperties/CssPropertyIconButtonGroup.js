@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ContextConsumer } from "../context";
-import BadgeButton from "./common/BadgeButton";
+import { ContextConsumer } from "../../context";
+import BadgeButton from "../common/BadgeButton";
 
 export default function CssPropertyIconButtonGroup({
   propertyName,
@@ -23,6 +23,7 @@ export default function CssPropertyIconButtonGroup({
           <div className="flex gap-2">
             {options.map((option) => (
               <button
+                key={propertyName + option.value}
                 title={label || propertyName}
                 className={
                   "p-1 border rounded my-1 " +

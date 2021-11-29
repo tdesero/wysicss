@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-import { ContextConsumer } from "../context";
+import { ContextConsumer } from "../../context";
 
-export default function CssPropertyTextInput({
-  propertyName,
-  cssClass,
-  label,
-}) {
+export default function CssPropertyInput({ propertyName, cssClass, label }) {
   const startValue = cssClass?.properties?.[propertyName]?.value || "";
   const [property, setProperty] = useState(startValue);
 
@@ -30,7 +26,8 @@ export default function CssPropertyTextInput({
             </button>
           </label>
           <input
-            type="text"
+            className="w-5 h-5 rounded-full border-0"
+            type="color"
             value={property}
             onChange={(e) => {
               const val = e.target.value;

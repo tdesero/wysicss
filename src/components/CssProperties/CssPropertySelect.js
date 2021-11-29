@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ContextConsumer } from "../context";
+import { ContextConsumer } from "../../context";
 
 export default function CssPropertySelect({
   propertyName,
@@ -30,7 +30,9 @@ export default function CssPropertySelect({
               {label}
             </option>
             {options.map((option) => (
-              <option value={option.value}>{option.label}</option>
+              <option value={option.value} key={propertyName + option.value}>
+                {option.label}
+              </option>
             ))}
           </select>
         </>

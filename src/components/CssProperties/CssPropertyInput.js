@@ -1,6 +1,6 @@
-import NumberControl from "./common/NumberControl";
+import NumberControl from "../common/NumberControl";
 import { useState, useEffect } from "react";
-import { ContextConsumer } from "../context";
+import { ContextConsumer } from "../../context";
 
 export default function CssPropertyInput({
   propertyName,

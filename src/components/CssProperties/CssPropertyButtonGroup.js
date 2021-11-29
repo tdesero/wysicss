@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ContextConsumer } from "../context";
-import BadgeButton from "./common/BadgeButton";
+import { ContextConsumer } from "../../context";
+import BadgeButton from "../common/BadgeButton";
 
 export default function CssPropertyButtonGroup({
   propertyName,
@@ -22,6 +22,7 @@ export default function CssPropertyButtonGroup({
           {label && <p className="text-xs">{label}</p>}
           {options.map((option) => (
             <BadgeButton
+              key={propertyName + option}
               size="sm"
               isActive={option === property}
               value={property}

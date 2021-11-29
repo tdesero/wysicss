@@ -1,7 +1,7 @@
 import hljs from "highlight.js";
 import "highlight.js/styles/a11y-dark.css";
 import Editor from "react-simple-code-editor";
-import CssProperties from "./CssProperties";
+import CssProperties from "./CssProperties/CssProperties";
 import BadgeButton from "./common/BadgeButton";
 import AddClassInput from "./AddClassInput";
 import { Accordion } from "./common/Accordion";
