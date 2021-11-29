@@ -14,6 +14,7 @@ export default function EditorCanvas(props) {
     currentActive,
     setCurrentActive,
     changeElementText,
+    removeElement,
   } = useContext(Context);
 
   const [ref, setRef] = useState();
@@ -97,6 +98,14 @@ export default function EditorCanvas(props) {
                   html={el.text}
                   onChange={(e) => {
                     changeElementText(el.id, e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      e.target.innerText === "" &&
+                      (e.key === "Backspace" || e.key === "Delete")
+                    ) {
+                      removeElement(el.id);
+                    }
                   }}
                   onDrop={(e) => {
                     e.preventDefault();

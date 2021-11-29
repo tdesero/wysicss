@@ -77,32 +77,34 @@ export default function ActiveFrame({ currentBox, scrollPos }) {
                 <Icon.Trash size={12} />
               </button>
             </div>
-            <div class="bg-indigo-800 flex p-1">
-              <button
-                style={{ pointerEvents: "auto" }}
-                onClick={addChild}
-                className="flex items-center"
-              >
-                <Icon.Plus size={12} />
-                <Icon.Square size={12} />
-              </button>
-              <button
-                style={{ pointerEvents: "auto" }}
-                onClick={addText}
-                className="flex items-center"
-              >
-                <Icon.Plus size={12} />
-                <Icon.Type size={12} />
-              </button>
-              <button
-                style={{ pointerEvents: "auto" }}
-                onClick={addImg}
-                className="flex items-center"
-              >
-                <Icon.Plus size={12} />
-                <Icon.Image size={12} />
-              </button>
-            </div>
+            {currentActive.tag && currentActive.tag !== "img" && (
+              <div className="bg-indigo-800 flex p-1">
+                <button
+                  style={{ pointerEvents: "auto" }}
+                  onClick={addChild}
+                  className="flex items-center"
+                >
+                  <Icon.Plus size={12} />
+                  <Icon.Square size={12} />
+                </button>
+                <button
+                  style={{ pointerEvents: "auto" }}
+                  onClick={addText}
+                  className="flex items-center"
+                >
+                  <Icon.Plus size={12} />
+                  <Icon.Type size={12} />
+                </button>
+                <button
+                  style={{ pointerEvents: "auto" }}
+                  onClick={addImg}
+                  className="flex items-center"
+                >
+                  <Icon.Plus size={12} />
+                  <Icon.Image size={12} />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
