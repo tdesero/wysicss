@@ -35,6 +35,7 @@ import {
   visbilityProperties,
   opacityProperty,
 } from "./allProperties";
+import { SpacingStyler } from "./SpacingStyler";
 
 export default function CssProperties({ cssClass, elementSelected }) {
   return (
@@ -207,30 +208,7 @@ export default function CssProperties({ cssClass, elementSelected }) {
         </div>
       </Accordion>
       <Accordion title="Spacing" isOpen={false}>
-        <p className="text-sm mb-2">Padding</p>
-        <div className="flex gap-2 mb-3">
-          {PaddingProperties.map((p) => (
-            <CssPropertyInput
-              key={p.name}
-              direction={p.direction}
-              propertyName={p.name}
-              label={p.label}
-              cssClass={cssClass}
-            />
-          ))}
-        </div>
-        <p className="text-sm mb-2">Margin</p>
-        <div className="flex gap-2 mb-3">
-          {marginProperties.map((p) => (
-            <CssPropertyInput
-              key={p.name}
-              direction={p.direction}
-              propertyName={p.name}
-              label={p.label}
-              cssClass={cssClass}
-            />
-          ))}
-        </div>
+        {SpacingStyler(cssClass)}
       </Accordion>
       <Accordion title="Border" isOpen={false}>
         <CssPropertyColorInput

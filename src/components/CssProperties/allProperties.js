@@ -112,6 +112,7 @@ export const fontWeightProperty = {
     { value: "900", label: "Black" },
   ],
 };
+/* Spacings need a more individual solution...
 export const PaddingProperties = [
   { name: "padding-top", label: "Top", direction: "y" },
   { name: "padding-right", label: "Right", direction: "x" },
@@ -123,7 +124,7 @@ export const marginProperties = [
   { name: "margin-right", label: "Right", direction: "x" },
   { name: "margin-bottom", label: "Bottom", direction: "y" },
   { name: "margin-left", label: "Left", direction: "x" },
-];
+]; */
 export const borderWidthProperties = [
   { name: "border-top-width", label: "Top", direction: "y" },
   { name: "border-right-width", label: "Right", direction: "x" },
