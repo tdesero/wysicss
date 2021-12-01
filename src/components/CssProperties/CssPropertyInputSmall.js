@@ -32,11 +32,9 @@ export default function CssPropertyInputSmall({
   const { updateClassProperty } = useContext(Context);
 
   function updateRelevantClassProperties(cssClass, propertyName, val, unit) {
+    console.log("isLinked", isLinked, linkedCSSProps);
     if (isLinked) {
-      linkedCSSProps.forEach((propertyName) => {
-        updateClassProperty(cssClass, propertyName, val, unit);
-        console.log(propertyName, val, unit);
-      });
+      updateClassProperty(cssClass, linkedCSSProps, val, unit);
     } else {
       updateClassProperty(cssClass, propertyName, val, unit);
     }
@@ -62,23 +60,19 @@ export default function CssPropertyInputSmall({
           }
           value={unit}
           onChange={(e) => {
-            setUnit(e.target.value);
-            /*if (e.target.value === "auto") {
+            const newVal = e.target.value;
+            setUnit(newVal);
+            if (newVal === "auto") {
               setProperty("");
+              updateRelevantClassProperties(cssClass, propertyName, "", newVal);
+            } else {
               updateRelevantClassProperties(
                 cssClass,
                 propertyName,
-                "",
-                e.target.value
+                property,
+                newVal
               );
-            } else {*/
-            updateRelevantClassProperties(
-              cssClass,
-              propertyName,
-              property,
-              e.target.value
-            );
-            /*}*/
+            }
           }}
         >
           {["px", "%", "em", "rem", "vh", "vw", "auto"].map((u) => (

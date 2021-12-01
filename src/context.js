@@ -107,20 +107,37 @@ export class ContextProvider extends Component {
     );
   }
 
-  updateClassProperty(classNameObj, property, value, unit = "") {
+  updateClassProperty(
+    classNameObj,
+    property /* string or array: 'height' or ['margin-left', 'margin-right' ...] */,
+    value,
+    unit = ""
+  ) {
     if (!classNameObj) return;
     const newClassNames = [...this.state.classNames];
     const index = newClassNames.findIndex(
       (el) => classNameObj.name === el.name
     );
     if (index > -1) {
-      newClassNames[index] = {
-        ...newClassNames[index],
-        properties: {
-          ...newClassNames[index].properties,
-          [property]: { value, unit },
-        },
-      };
+      if (Array.isArray(property)) {
+        property.forEach((prop) => {
+          newClassNames[index] = {
+            ...newClassNames[index],
+            properties: {
+              ...newClassNames[index].properties,
+              [prop]: { value, unit },
+            },
+          };
+        });
+      } else {
+        newClassNames[index] = {
+          ...newClassNames[index],
+          properties: {
+            ...newClassNames[index].properties,
+            [property]: { value, unit },
+          },
+        };
+      }
     }
 
     this.setState(
