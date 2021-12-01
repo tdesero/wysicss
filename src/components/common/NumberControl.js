@@ -42,7 +42,7 @@ export default function NumberControl(props) {
   return (
     <input
       {...props}
-      className="w-full"
+      className={"w-full " + (props.className ? props.className : "")}
       ref={ref}
       type="number"
       value={props.value}
