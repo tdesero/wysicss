@@ -6,15 +6,16 @@ export default function NumberControl(props) {
   const ref = useRef();
   const { direction } = props;
   let startPos = null;
-  const isXDirection = direction === "x";
+  const isXDirection = ["e", "w", "x"].indexOf(direction) > -1;
 
   const updateMouse = (e) => {
     const clientPos = isXDirection ? e.clientX : e.clientY;
+    const plusOrMinus = direction === "s" || direction === "w" ? -1 : +1;
     let newValue;
     if (isXDirection) {
-      newValue = -startPos + clientPos + Number(startValue);
+      newValue = (-startPos + clientPos) * plusOrMinus + Number(startValue);
     } else {
-      newValue = startPos - clientPos + Number(startValue);
+      newValue = (startPos - clientPos) * plusOrMinus + Number(startValue);
     }
 
     props.onChange(newValue);
@@ -25,7 +26,7 @@ export default function NumberControl(props) {
     document.removeEventListener("mouseup", mouseUpHandler);
   };
   const startChange = (e) => {
-    const clientPos = direction === "x" ? e.clientX : e.clientY;
+    const clientPos = isXDirection ? e.clientX : e.clientY;
     startPos = clientPos;
     setStartValue(e.target.value);
     document.addEventListener("mousemove", updateMouse);
@@ -39,10 +40,21 @@ export default function NumberControl(props) {
     setStartValue(props.value);
   }, [setStartValue, props.value]);
 
+  const cursorMap = {
+    n: "n-resize",
+    e: "e-resize",
+    s: "s-resize",
+    w: "w-resize",
+    x: "ew-resize",
+    y: "ns-resize",
+  };
+
   return (
     <input
       {...props}
-      className={"w-full " + (props.className ? props.className : "")}
+      className={
+        "bg-transparent w-full " + (props.className ? props.className : "")
+      }
       ref={ref}
       type="number"
       value={props.value}
@@ -52,7 +64,7 @@ export default function NumberControl(props) {
         props.onChange(e.target.value);
       }}
       style={{
-        cursor: direction === "x" ? "ew-resize" : "ns-resize",
+        cursor: cursorMap[direction],
       }}
     />
   );
