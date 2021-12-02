@@ -234,6 +234,9 @@ export const flexProperties = [
       { value: "wrap", icon: <Icon.Check size={20} /> },
     ],
   },
+];
+
+export const flexChildProperties = [
   {
     name: "flex-grow",
     options: [

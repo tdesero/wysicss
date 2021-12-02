@@ -27,8 +27,7 @@ import {
   justifyContentProperty,
   alignItemsProperty,
   flexProperties,
-  PaddingProperties,
-  marginProperties,
+  flexChildProperties,
   borderColorProperty,
   borderRadiusProperties,
   borderWidthProperties,
@@ -171,31 +170,51 @@ export default function CssProperties({ cssClass, elementSelected }) {
             cssClass={cssClass}
           />
         </div>
-        <div className="flex gap-2">
-          <div className="mb-3">
-            <p className="text-sm mb-2">
-              Justify <span className="text-xs text-gray-400">(Flex only)</span>
-            </p>
 
-            <CssPropertyIconButtonGroup
-              propertyName={justifyContentProperty.name}
-              options={justifyContentProperty.options}
-              cssClass={cssClass}
-            />
-          </div>
-          <div className="mb-3">
-            <p className="text-sm mb-2">
-              Align <span className="text-xs text-gray-400">(Flex only)</span>
-            </p>
-            <CssPropertyIconButtonGroup
-              propertyName={alignItemsProperty.name}
-              options={alignItemsProperty.options}
-              cssClass={cssClass}
-            />
-          </div>
-        </div>
+        {cssClass?.properties?.display?.value.includes("flex") && (
+          <>
+            <div className="flex gap-2">
+              <div className="mb-3">
+                <p className="text-sm mb-2">
+                  Justify{" "}
+                  <span className="text-xs text-gray-400">(Flex only)</span>
+                </p>
+
+                <CssPropertyIconButtonGroup
+                  propertyName={justifyContentProperty.name}
+                  options={justifyContentProperty.options}
+                  cssClass={cssClass}
+                />
+              </div>
+              <div className="mb-3">
+                <p className="text-sm mb-2">
+                  Align{" "}
+                  <span className="text-xs text-gray-400">(Flex only)</span>
+                </p>
+                <CssPropertyIconButtonGroup
+                  propertyName={alignItemsProperty.name}
+                  options={alignItemsProperty.options}
+                  cssClass={cssClass}
+                />
+              </div>
+            </div>
+            <div className="flex mb-3">
+              {flexProperties.map((p) => (
+                <div className="w-1/3" key={p.name}>
+                  <CssPropertyIconButtonGroup
+                    propertyName={p.name}
+                    label={p.name}
+                    options={p.options}
+                    cssClass={cssClass}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+        <p className="text-sm">Flex Child</p>
         <div className="flex mb-3">
-          {flexProperties.map((p) => (
+          {flexChildProperties.map((p) => (
             <div className="w-1/3" key={p.name}>
               <CssPropertyIconButtonGroup
                 propertyName={p.name}

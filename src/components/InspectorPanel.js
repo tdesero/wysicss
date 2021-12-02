@@ -45,7 +45,7 @@ export default function InspectorPanel() {
         selectClass(newClassObj);
       }
     }
-  }, [currentActive, getClassByName]);
+  }, [currentActive, getClassByName, classNames]);
 
   const selectPseudo = (classObj, pseudo) => {
     setCssClass(classObj);

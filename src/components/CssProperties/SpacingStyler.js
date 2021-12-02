@@ -54,26 +54,22 @@ export function SpacingStyler(cssClass) {
       </div>
       <div className="absolute inset-y-0 left-0 flex items-center p-3">
         <div className="w-10">
-          {!isMarginLinked && (
-            <SpacingInput
-              direction={"w"}
-              propertyName={"margin-left"}
-              cssClass={cssClass}
-              isLinked={isMarginLinked}
-            />
-          )}
+          <SpacingInput
+            direction={"w"}
+            propertyName={"margin-left"}
+            cssClass={cssClass}
+            isLinked={isMarginLinked}
+          />
         </div>
       </div>
       <div className="absolute inset-y-0 right-0 flex items-center p-3">
         <div className="w-10">
-          {!isMarginLinked && (
-            <SpacingInput
-              direction={"e"}
-              propertyName={"margin-right"}
-              cssClass={cssClass}
-              isLinked={isMarginLinked}
-            />
-          )}
+          <SpacingInput
+            direction={"e"}
+            propertyName={"margin-right"}
+            cssClass={cssClass}
+            isLinked={isMarginLinked}
+          />
         </div>
       </div>
       <div className="absolute inset-x-0 top-0 flex justify-center p-3">
@@ -88,14 +84,12 @@ export function SpacingStyler(cssClass) {
       </div>
       <div className="absolute inset-x-0 bottom-0 flex justify-center p-3">
         <div className="w-10">
-          {!isMarginLinked && (
-            <SpacingInput
-              direction="s"
-              propertyName={"margin-bottom"}
-              cssClass={cssClass}
-              isLinked={isMarginLinked}
-            />
-          )}
+          <SpacingInput
+            direction="s"
+            propertyName={"margin-bottom"}
+            cssClass={cssClass}
+            isLinked={isMarginLinked}
+          />
         </div>
       </div>
       <div className="absolute text-center rounded inset-0 h-26 my-12 mx-16">
@@ -112,26 +106,22 @@ export function SpacingStyler(cssClass) {
         </div>
         <div className="absolute rounded inset-y-0 left-0 flex items-center p-3">
           <div className="w-10">
-            {!isPaddingLinked && (
-              <SpacingInput
-                direction={"e"}
-                propertyName={"padding-left"}
-                cssClass={cssClass}
-                isLinked={isPaddingLinked}
-              />
-            )}
+            <SpacingInput
+              direction={"e"}
+              propertyName={"padding-left"}
+              cssClass={cssClass}
+              isLinked={isPaddingLinked}
+            />
           </div>
         </div>
         <div className="absolute rounded inset-y-0 right-0 flex items-center p-3">
           <div className="w-10">
-            {!isPaddingLinked && (
-              <SpacingInput
-                direction={"w"}
-                propertyName={"padding-right"}
-                cssClass={cssClass}
-                isLinked={isPaddingLinked}
-              />
-            )}
+            <SpacingInput
+              direction={"w"}
+              propertyName={"padding-right"}
+              cssClass={cssClass}
+              isLinked={isPaddingLinked}
+            />
           </div>
         </div>
         <div className="absolute rounded inset-x-0 top-0 flex justify-center p-3">
@@ -146,14 +136,12 @@ export function SpacingStyler(cssClass) {
         </div>
         <div className="absolute rounded inset-x-0 bottom-0 flex justify-center p-3">
           <div className="w-10">
-            {!isPaddingLinked && (
-              <SpacingInput
-                direction={"n"}
-                propertyName={"padding-bottom"}
-                cssClass={cssClass}
-                isLinked={isPaddingLinked}
-              />
-            )}
+            <SpacingInput
+              direction={"n"}
+              propertyName={"padding-bottom"}
+              cssClass={cssClass}
+              isLinked={isPaddingLinked}
+            />
           </div>
         </div>
       </div>
