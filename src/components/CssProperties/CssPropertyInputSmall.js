@@ -32,7 +32,6 @@ export default function CssPropertyInputSmall({
   const { updateClassProperty } = useContext(Context);
 
   function updateRelevantClassProperties(cssClass, propertyName, val, unit) {
-    console.log("isLinked", isLinked, linkedCSSProps);
     if (isLinked) {
       updateClassProperty(cssClass, linkedCSSProps, val, unit);
     } else {

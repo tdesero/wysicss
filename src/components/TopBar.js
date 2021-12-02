@@ -1,6 +1,8 @@
 import * as Icon from "react-feather";
 import { useContext } from "react";
 import { Context } from "../context";
+import ToolTipWrapper from "./common/TooltipWrapper";
+import TooltipWrapper from "./common/TooltipWrapper";
 
 export default function TopBar({
   setResponsiveWidth,
@@ -29,32 +31,42 @@ export default function TopBar({
         </div>
       </div>
       <div className="flex justify-center items-center px-4">
-        <button
-          className={"mx-1 " + (responsiveWidth === 400 ? "text-white" : "")}
-          onClick={() => setResponsiveWidth(400)}
-        >
-          <Icon.Smartphone size={16} />
-        </button>
-        <button
-          className={"mx-1 " + (responsiveWidth === 700 ? "text-white" : "")}
-          onClick={() => setResponsiveWidth(700)}
-        >
-          <Icon.Tablet size={16} />
-        </button>
-        <button
-          className={"mx-1 " + (responsiveWidth === "100%" ? "text-white" : "")}
-          onClick={() => setResponsiveWidth("100%")}
-        >
-          <Icon.Monitor size={16} />
-        </button>
+        <TooltipWrapper tooltip="Mobile">
+          <button
+            className={"mx-1 " + (responsiveWidth === 400 ? "text-white" : "")}
+            onClick={() => setResponsiveWidth(400)}
+          >
+            <Icon.Smartphone size={16} />
+          </button>
+        </TooltipWrapper>
+        <TooltipWrapper tooltip="Tablet">
+          <button
+            className={"mx-1 " + (responsiveWidth === 700 ? "text-white" : "")}
+            onClick={() => setResponsiveWidth(700)}
+          >
+            <Icon.Tablet size={16} />
+          </button>
+        </TooltipWrapper>
+        <TooltipWrapper tooltip="Desktop">
+          <button
+            className={
+              "mx-1 " + (responsiveWidth === "100%" ? "text-white" : "")
+            }
+            onClick={() => setResponsiveWidth("100%")}
+          >
+            <Icon.Monitor size={16} />
+          </button>
+        </TooltipWrapper>
       </div>
       <div className="flex items-center justify-end px-4">
-        <button
-          className={hidePanels ? "text-white" : undefined}
-          onClick={() => setHidePanels(!hidePanels)}
-        >
-          <Icon.Eye size={16} />
-        </button>
+        <TooltipWrapper tooltip="Preview Mode: Hide Panels">
+          <button
+            className={hidePanels ? "text-white" : undefined}
+            onClick={() => setHidePanels(!hidePanels)}
+          >
+            <Icon.Eye size={16} />
+          </button>
+        </TooltipWrapper>
       </div>
     </div>
   );

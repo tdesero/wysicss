@@ -16,3 +16,39 @@ input.appearance-none::-webkit-inner-spin-button {
 input.appearance-none[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* Additional Popper Styles */
+
+[data-popper-placement^="top"] > .popper-arrow {
+  bottom: -4px;
+}
+
+[data-popper-placement^="bottom"] > .popper-arrow {
+  top: -4px;
+}
+
+[data-popper-placement^="left"] > .popper-arrow {
+  right: -4px;
+}
+
+[data-popper-placement^="right"] > .popper-arrow {
+  left: -4px;
+}
+
+.popper-arrow,
+.popper-arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+.popper-arrow {
+  visibility: hidden;
+}
+
+.popper-arrow::before {
+  visibility: visible;
+  content: "";
+  transform: rotate(45deg);
+}
