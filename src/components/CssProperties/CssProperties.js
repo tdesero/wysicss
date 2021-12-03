@@ -35,6 +35,7 @@ import {
 import { SpacingStyler } from "./SpacingStyler";
 import BorderWidthStyler from "./BorderWidthStyler";
 import BorderRadiusStyler from "./BorderRadiusStyler";
+import BoxShadowStyler from "./BoxShadowStyler";
 
 export default function CssProperties({ cssClass, elementSelected }) {
   return (
@@ -245,6 +246,9 @@ export default function CssProperties({ cssClass, elementSelected }) {
             />
           </div>
         </div>
+      </Accordion>
+      <Accordion title="Effects" isOpen={true}>
+        <BoxShadowStyler cssClass={cssClass} />
       </Accordion>
       <Accordion title="Visibility" isOpen={false}>
         <div className="flex gap-2">

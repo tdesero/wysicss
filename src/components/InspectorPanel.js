@@ -82,6 +82,15 @@ export default function InspectorPanel() {
                   : "p-4 flex-1 font-bold uppercase"
               }
             >
+              Style
+            </Tab>
+            <Tab
+              className={({ selected }) =>
+                selected
+                  ? "p-4 border-b-2 border-indigo-500 flex-1 font-bold uppercase"
+                  : "p-4 flex-1 font-bold uppercase"
+              }
+            >
               Element
             </Tab>
             <Tab
@@ -98,7 +107,7 @@ export default function InspectorPanel() {
             <Tab.Panel>
               {
                 //we don't need this, if it's a textnode
-                currentActive && currentActive.tag && (
+                (currentActive && currentActive.tag) || cssClass ? (
                   <CssEditor
                     {...{
                       elementSelected: currentActive,
@@ -116,9 +125,15 @@ export default function InspectorPanel() {
                       removeClassFromElement,
                     }}
                   />
+                ) : (
+                  <div class="p-4 text-sm">
+                    Click on an Element to style it.
+                  </div>
                 )
               }
-              <Accordion title="Element Details" isOpen={false}>
+            </Tab.Panel>
+            <Tab.Panel>
+              <Accordion title="Element Details" isOpen={true}>
                 <ElementInfos
                   {...{
                     elementSelected: currentActive,
