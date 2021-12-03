@@ -6,14 +6,11 @@ import { ColorPicker } from "../common/ColorPicker";
 
 const BOX_SHADOW = "box-shadow";
 
-/*
-Box Shadow is stored as array like [ x, y, blur, spread, rgba(0,0,0,1)] 
-*/
-
 const BoxShadowStyler = ({ cssClass }) => {
   const { updateClassProperty } = useContext(Context);
 
-  let startVal = cssClass?.properties[BOX_SHADOW]?.value
+  /* Box Shadow is stored locally as array like [ x, y, blur, spread, rgba(0,0,0,1)] */
+  let startVal = cssClass?.properties?.[BOX_SHADOW]?.value
     ?.split(", ")
     .map((shadow) => shadow.split(" "));
 
@@ -111,7 +108,6 @@ const BoxShadowStyler = ({ cssClass }) => {
               <ColorPicker
                 color={shadowArr[4]}
                 onChange={(color) => {
-                  //console.log(color);
                   const rgba = `rgba(${Object.values(color.rgb).join(",")})`;
                   setPropertyVals(rgba, outerIndex, 4);
                 }}
