@@ -29,12 +29,12 @@ import {
   flexProperties,
   flexChildProperties,
   borderColorProperty,
-  borderRadiusProperties,
-  borderWidthProperties,
   visbilityProperties,
   opacityProperty,
 } from "./allProperties";
 import { SpacingStyler } from "./SpacingStyler";
+import BorderWidthStyler from "./BorderWidthStyler";
+import BorderRadiusStyler from "./BorderRadiusStyler";
 
 export default function CssProperties({ cssClass, elementSelected }) {
   return (
@@ -230,34 +230,20 @@ export default function CssProperties({ cssClass, elementSelected }) {
         {SpacingStyler(cssClass)}
       </Accordion>
       <Accordion title="Border" isOpen={false}>
-        <CssPropertyColorInput
-          propertyName={borderColorProperty.name}
-          label={borderColorProperty.label}
-          cssClass={cssClass}
-        />
-        <p className="text-sm mb-2">Border Radius</p>
-        <div className="flex gap-2 mb-3">
-          {borderRadiusProperties.map((p) => (
-            <CssPropertyInput
-              key={p.name}
-              direction={p.direction}
-              propertyName={p.name}
-              label={p.label}
+        <div className="flex mb-3">
+          <div className="flex-grow">
+            <BorderWidthStyler cssClass={cssClass} />
+          </div>
+          <div className="flex-grow">
+            <BorderRadiusStyler cssClass={cssClass} />
+          </div>
+          <div className="flex-grow">
+            <CssPropertyColorInput
+              propertyName={borderColorProperty.name}
+              label={borderColorProperty.label}
               cssClass={cssClass}
             />
-          ))}
-        </div>
-        <p className="text-sm mb-2">Border Width</p>
-        <div className="flex gap-2 mb-3">
-          {borderWidthProperties.map((p) => (
-            <CssPropertyInput
-              key={p.name}
-              direction={p.direction}
-              propertyName={p.name}
-              label={p.label}
-              cssClass={cssClass}
-            />
-          ))}
+          </div>
         </div>
       </Accordion>
       <Accordion title="Visibility" isOpen={false}>

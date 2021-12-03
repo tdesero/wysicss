@@ -15,6 +15,7 @@ import {
   alignCenter,
   alignRight,
   columns,
+  moveTo,
 } from "@wordpress/icons";
 import ImageIcons from "./ImageIcons";
 
@@ -125,18 +126,20 @@ export const marginProperties = [
   { name: "margin-bottom", label: "Bottom", direction: "y" },
   { name: "margin-left", label: "Left", direction: "x" },
 ]; */
+/*
 export const borderWidthProperties = [
   { name: "border-top-width", label: "Top", direction: "y" },
   { name: "border-right-width", label: "Right", direction: "x" },
   { name: "border-bottom-width", label: "Bottom", direction: "y" },
   { name: "border-left-width", label: "Left", direction: "x" },
-];
+];*/
+/*
 export const borderRadiusProperties = [
   { name: "border-top-left-radius", label: "Top Left" },
   { name: "border-top-right-radius", label: "Top Right" },
   { name: "border-bottom-right-radius", label: "B. Right" },
   { name: "border-bottom-left-radius", label: "B. Left" },
-];
+];*/
 export const borderColorProperty = {
   name: "border-color",
   label: "Border Color",
@@ -231,7 +234,10 @@ export const flexProperties = [
     name: "flex-wrap",
     options: [
       { value: "no-wrap", icon: <Icon.X size={20} /> },
-      { value: "wrap", icon: <Icon.Check size={20} /> },
+      {
+        value: "wrap",
+        icon: <WPIcon icon={moveTo} fill="currentColor" size={20} />,
+      },
     ],
   },
 ];
