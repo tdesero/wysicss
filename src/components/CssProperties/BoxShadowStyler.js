@@ -55,7 +55,7 @@ const BoxShadowStyler = ({ cssClass }) => {
   return (
     <div>
       <p className="text-sm">
-        Box Shadow <button onClick={addNewShadow}>+</button>
+        <button onClick={addNewShadow}>Box Shadow +</button>
       </p>
       {shadows?.map((shadowArr, outerIndex) => {
         return (

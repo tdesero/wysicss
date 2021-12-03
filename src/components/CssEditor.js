@@ -27,7 +27,7 @@ export default function CssEditor({
 
   return (
     <>
-      <div className="p-3 border-b">
+      <div className="p-4 border-b sticky top-0 bg-white z-10">
         <p className="text-xs font-bold uppercase tracking-wider mb-3">
           Classes
         </p>

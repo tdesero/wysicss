@@ -3,7 +3,7 @@ export default function BadgeButton({
   onDelete,
   children,
   isActive,
-  size = "md"
+  size = "md",
 }) {
   const activeClass = isActive
     ? "bg-indigo-500 text-white"
@@ -13,14 +13,14 @@ export default function BadgeButton({
     xs: "text-xs",
     sm: "text-sm",
     md: "",
-    lg: "text-lg"
+    lg: "text-lg",
   };
 
   const sizeClass = sizes[size];
 
   return (
     <div
-      className={`inline-flex rounded px-2 mr-1 mb-1 ${activeClass} ${sizeClass}`}
+      className={`inline-flex cursor-pointer rounded px-2 mr-1 mb-1 ${activeClass} ${sizeClass}`}
     >
       <span onClick={onClick}>{children}</span>
       {onDelete && (
