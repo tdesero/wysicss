@@ -49,7 +49,7 @@ export function SpacingStyler(cssClass) {
           }}
           className={isMarginLinked ? "text-gray-900" : "text-gray-400"}
         >
-          <Icon.Link size={12} />
+          <Icon.Link2 size={12} />
         </button>
       </div>
       <div className="absolute inset-y-0 left-0 flex items-center p-3">
@@ -101,7 +101,7 @@ export function SpacingStyler(cssClass) {
             }}
             className={isPaddingLinked ? "text-gray-900" : "text-gray-400"}
           >
-            <Icon.Link size={12} />
+            <Icon.Link2 size={12} />
           </button>
         </div>
         <div className="absolute rounded inset-y-0 left-0 flex items-center p-3">
