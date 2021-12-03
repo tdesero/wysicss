@@ -45,7 +45,17 @@ export default function InspectorPanel() {
         selectClass(newClassObj);
       }
     }
-  }, [currentActive, getClassByName, classNames]);
+  }, [currentActive, getClassByName]);
+
+  // make sure the current class is always up to date
+  useEffect(() => {
+    if (cssClass) {
+      const newClassObj = getClassByName(cssClass.name);
+      if (newClassObj) {
+        selectClass(newClassObj);
+      }
+    }
+  }, [classNames]);
 
   const selectPseudo = (classObj, pseudo) => {
     setCssClass(classObj);
