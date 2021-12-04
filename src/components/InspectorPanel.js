@@ -35,6 +35,8 @@ export default function InspectorPanel() {
     getClassByName,
     importJSON,
     changeElementSrc,
+    currentBreakpoint,
+    breakpoints,
   } = useContext(Context);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function InspectorPanel() {
         selectClass(newClassObj);
       }
     }
-  }, [classNames]);
+  }, [classNames, currentBreakpoint]);
 
   const selectPseudo = (classObj, pseudo) => {
     setCssClass(classObj);
@@ -177,7 +179,9 @@ export default function InspectorPanel() {
               <Accordion title="Export" isOpen={true}>
                 <button
                   className="mt-3 w-full py-2 px-6 rounded border text-indigo-500 border-indigo-500 flex-grow"
-                  onClick={() => exportHTML({ classNames, elements })}
+                  onClick={() =>
+                    exportHTML({ classNames, elements, breakpoints })
+                  }
                 >
                   Export HTML
                 </button>

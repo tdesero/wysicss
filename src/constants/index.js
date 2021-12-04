@@ -1,3 +1,15 @@
+export const MOVE_ELEMENT_POSITION = {
+  AFTER: "AFTER",
+  BEFORE: "BEFORE",
+  INSIDE: "INSIDE",
+};
+
+export const BREAKPOINT_NAMES = {
+  MOBILE: "mobile",
+  TABLET: "tablet",
+  DESKTOP: undefined,
+};
+
 export const DEFAULT_ELEMENTS = [
   {
     tag: "div",
@@ -212,9 +224,3 @@ export const DEFAULT_CLASSNAMES = [
     },
   },
 ];
-
-export const MOVE_ELEMENT_POSITION = {
-  AFTER: "AFTER",
-  BEFORE: "BEFORE",
-  INSIDE: "INSIDE",
-};

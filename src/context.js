@@ -8,6 +8,7 @@ import {
   DEFAULT_ELEMENTS,
   DEFAULT_CLASSNAMES,
   MOVE_ELEMENT_POSITION,
+  BREAKPOINT_NAMES,
 } from "./constants";
 var debounce = require("lodash/debounce");
 
@@ -16,6 +17,7 @@ export const Context = createContext();
 export class ContextProvider extends Component {
   constructor(props) {
     super(props);
+    this.setBreakpoint = this.setBreakpoint.bind(this);
     this.addClassName = this.addClassName.bind(this);
     this.removeClassName = this.removeClassName.bind(this);
     this.updateClassText = this.updateClassText.bind(this);
@@ -41,10 +43,17 @@ export class ContextProvider extends Component {
       currentActive: undefined,
       classNames: DEFAULT_CLASSNAMES,
       elements: DEFAULT_ELEMENTS,
+      breakpoints: {
+        // hard coded atm, check TopBar.js as well to make it dynamically changeable
+        [BREAKPOINT_NAMES.MOBILE]: 400,
+        [BREAKPOINT_NAMES.TABLET]: 700,
+      },
+      currentBreakpoint: undefined, // undefined is base breakpoint (Desktop)
       history: [],
       historyPos: 0, //not active, negative is active
 
       // methods
+      setBreakpoint: this.setBreakpoint,
       addClassName: this.addClassName,
       removeClassName: this.removeClassName,
       updateClassText: this.updateClassText,
@@ -68,6 +77,10 @@ export class ContextProvider extends Component {
       //getters
       getClassByName: this.getClassByName,
     };
+  }
+
+  setBreakpoint(breakpoint) {
+    this.setState({ currentBreakpoint: breakpoint });
   }
 
   addClassName(className) {
@@ -114,6 +127,16 @@ export class ContextProvider extends Component {
     unit = ""
   ) {
     if (!classNameObj) return;
+    if (this.state.currentBreakpoint) {
+      this.updateClassBreakpointProperty({
+        classNameObj,
+        property,
+        value,
+        unit,
+        breakpoint: this.state.currentBreakpoint,
+      });
+      return;
+    }
     const newClassNames = [...this.state.classNames];
     const index = newClassNames.findIndex(
       (el) => classNameObj.name === el.name
@@ -137,6 +160,51 @@ export class ContextProvider extends Component {
             [property]: { value, unit },
           },
         };
+      }
+    }
+
+    this.setState(
+      { classNames: [...newClassNames] },
+      this.debouncedAddToHistory
+    );
+  }
+
+  updateClassBreakpointProperty({
+    classNameObj,
+    property /* string or array: 'height' or ['margin-left', 'margin-right' ...] */,
+    value,
+    unit = "",
+    breakpoint,
+  }) {
+    if (!classNameObj) return;
+    const newClassNames = [...this.state.classNames];
+    const index = newClassNames.findIndex(
+      (el) => classNameObj.name === el.name
+    );
+
+    // not a pure function!
+    function changeClass(classes, prop) {
+      classes[index] = {
+        ...classes[index],
+        breakpoints: {
+          ...classes[index].breakpoints,
+          [breakpoint]: {
+            properties: {
+              ...classes[index].breakpoints?.[breakpoint]?.properties,
+              [prop]: { value, unit },
+            },
+          },
+        },
+      };
+    }
+
+    if (index > -1) {
+      if (Array.isArray(property)) {
+        property.forEach((prop) => {
+          changeClass(newClassNames, prop);
+        });
+      } else {
+        changeClass(newClassNames, property);
       }
     }
 
@@ -288,7 +356,19 @@ export class ContextProvider extends Component {
     if (!classObj) {
       return this.state.addClassName(name);
     }
-    return classObj;
+
+    if (this.state.currentBreakpoint) {
+      /* Not sure if there is a better way to handle this, 
+      maybe i should rename the method? Important is, 
+      that the returned object needs a name prop and the css properties etc. */
+      return {
+        name: classObj.name,
+        txt: "",
+        ...classObj?.breakpoints?.[this.state.currentBreakpoint],
+      };
+    } else {
+      return classObj;
+    }
   }
 
   /* param by = number // is -1 to move up or +1 to move down */

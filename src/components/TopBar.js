@@ -1,8 +1,11 @@
 import * as Icon from "react-feather";
 import { useContext } from "react";
 import { Context } from "../context";
-import ToolTipWrapper from "./common/TooltipWrapper";
 import TooltipWrapper from "./common/TooltipWrapper";
+
+import { BREAKPOINT_NAMES } from "../constants";
+
+const { MOBILE, TABLET, DESKTOP } = BREAKPOINT_NAMES;
 
 export default function TopBar({
   setResponsiveWidth,
@@ -10,7 +13,8 @@ export default function TopBar({
   hidePanels,
   setHidePanels,
 }) {
-  const { historyMove, historyPos, history } = useContext(Context);
+  const { historyMove, historyPos, history, setBreakpoint, breakpoints } =
+    useContext(Context);
 
   return (
     <div className="text-xs h-12 border-b bg-gray-900 text-gray-500 space-x-4 grid grid-cols-3">
@@ -33,28 +37,45 @@ export default function TopBar({
       <div className="flex justify-center items-center px-4">
         <TooltipWrapper tooltip="Mobile">
           <button
-            className={"mx-1 " + (responsiveWidth === 400 ? "text-white" : "")}
-            onClick={() => setResponsiveWidth(400)}
+            className={
+              "mx-1 " +
+              (responsiveWidth === breakpoints[MOBILE] ? "text-white" : "")
+            }
+            onClick={() => {
+              setResponsiveWidth(400);
+              setBreakpoint(MOBILE);
+            }}
           >
             <Icon.Smartphone size={16} />
           </button>
         </TooltipWrapper>
         <TooltipWrapper tooltip="Tablet">
           <button
-            className={"mx-1 " + (responsiveWidth === 700 ? "text-white" : "")}
-            onClick={() => setResponsiveWidth(700)}
+            className={
+              "mx-1 " +
+              (responsiveWidth === breakpoints[TABLET] ? "text-white" : "")
+            }
+            onClick={() => {
+              setResponsiveWidth(700);
+              setBreakpoint(TABLET);
+            }}
           >
             <Icon.Tablet size={16} />
           </button>
         </TooltipWrapper>
-        <TooltipWrapper tooltip="Desktop">
+        <TooltipWrapper tooltip="Desktop (Base Breakpoint)">
           <button
             className={
-              "mx-1 " + (responsiveWidth === "100%" ? "text-white" : "")
+              "relative mx-1 " +
+              (responsiveWidth === "100%" ? "text-white" : "")
             }
-            onClick={() => setResponsiveWidth("100%")}
+            onClick={() => {
+              setResponsiveWidth("100%");
+              setBreakpoint(DESKTOP);
+            }}
           >
             <Icon.Monitor size={16} />
+            <div className="absolute -top-px -right-px rounded-full bg-indigo-500 h-2 w-2"></div>
           </button>
         </TooltipWrapper>
       </div>

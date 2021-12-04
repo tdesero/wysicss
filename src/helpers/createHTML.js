@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import ReactDOMServer from "react-dom/server";
 import { html as beautify } from "js-beautify";
 
-export default function createHTML({ classNames, elements }) {
+export default function createHTML({ classNames, elements, breakpoints }) {
   let classNamesCss = "";
   classNames.forEach((c) => {
     let properties = "";
@@ -16,6 +16,22 @@ export default function createHTML({ classNames, elements }) {
       `.${c.name}:hover { ${c[":hover"]} } \n` +
       `.${c.name}::before { ${c[":before"]} } \n` +
       `.${c.name}::after { ${c[":after"]} } \n`;
+
+    // maybe later i just need the current breakpoint for preview mode (if performance is bad...)
+    if (c.breakpoints) {
+      for (const [breakpoint, css] of Object.entries(c.breakpoints)) {
+        let bpProps = "";
+        if (css?.properties) {
+          for (let [key, obj] of Object.entries(css.properties)) {
+            bpProps += `${key}: ${obj.value}${obj.unit};\n`;
+          }
+        }
+        classNamesCss += `@media screen and (max-width: ${breakpoints[breakpoint]}px) {\n
+          .${c.name} {\n
+          ${bpProps}
+        }} \n`;
+      }
+    }
   });
 
   const childElements = (childrenArray) =>
