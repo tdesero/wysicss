@@ -20,6 +20,7 @@ export default function CssEditor({
   updatePseudoClass,
   updateClassText,
   removeClassFromElement,
+  getClassByName,
 }) {
   const highlight = (txt) => {
     return hljs.highlight(txt, { language: "css" }).value;
@@ -39,7 +40,7 @@ export default function CssEditor({
               isActive={n === cssClass?.name ? true : false}
               onClick={() => {
                 // find class
-                const c = classNames.find((cn) => cn.name === n);
+                const c = getClassByName(n);
                 if (c) {
                   selectClass(c);
                 } else {

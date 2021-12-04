@@ -125,6 +125,7 @@ export default function InspectorPanel() {
                       updatePseudoClass,
                       updateClassText,
                       removeClassFromElement,
+                      getClassByName,
                     }}
                   />
                 ) : (
