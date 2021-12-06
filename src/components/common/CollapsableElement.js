@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function CollapsableElement({ isOpen = true, ...props }) {
+export default function CollapsableElement({ isOpen = true, title, ...props }) {
   const [open, setOpen] = useState(isOpen);
   return (
     <div className="relative" {...props}>
@@ -10,7 +10,7 @@ export default function CollapsableElement({ isOpen = true, ...props }) {
       >
         {open ? "-" : "+"}
       </button>
-      {props.title}
+      {title}
       <div>{open ? props.children : null}</div>
     </div>
   );
