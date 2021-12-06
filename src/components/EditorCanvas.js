@@ -59,7 +59,9 @@ export default function EditorCanvas(props) {
 
     // maybe later i just need the current breakpoint for preview mode (if performance is bad...)
     if (c.breakpoints) {
-      for (const [breakpoint, css] of Object.entries(c.breakpoints)) {
+      for (const [breakpoint, css] of Object.entries(c.breakpoints).sort(
+        (a, b) => breakpoints[b[0]] - breakpoints[a[0]] // sorts breakpoints by actual size
+      )) {
         let bpProps = "";
         if (css?.properties) {
           for (let [key, obj] of Object.entries(css.properties)) {
