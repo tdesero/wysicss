@@ -68,7 +68,7 @@ export default function ElementTreeItemSingle({
       elClassList += `.${name}`;
     });
 
-  const activeClass = el.id === currentActive?.id ? "bg-gray-200" : "";
+  const activeClass = el.id === currentActive?.id ? "bg-gray-100" : "";
 
   const AlwaysVisible = (
     <div
@@ -93,50 +93,57 @@ export default function ElementTreeItemSingle({
           {el.classNames && elClassList}
         </span>
       </div>
-      <button className="mx-1" onClick={() => moveElement(el.id, -1)}>
-        <Icon.ArrowUp size={12} />
-      </button>
-      <button className="mx-1" onClick={() => moveElement(el.id, 1)}>
-        <Icon.ArrowDown size={12} />
-      </button>
-      <button className="mx-1" onClick={() => cloneElement(el.id)}>
-        <Icon.Copy size={12} />
-      </button>
-      <button
-        className="mx-1"
-        onClick={(e) => {
-          e.stopPropagation();
-          removeElement(el.id);
-        }}
-      >
-        <Icon.Trash size={12} />
-      </button>
-      {el.tag && (
+      {el.id === currentActive?.id && (
         <>
-          <button
-            className="px-2 rounded bg-gray-300 mr-1"
-            onClick={() => {
-              addChildToElement(el.id, "div");
-            }}
-          >
-            + div
+          <button className="mx-1" onClick={() => moveElement(el.id, -1)}>
+            <Icon.ArrowUp size={12} />
+          </button>
+          <button className="mx-1" onClick={() => moveElement(el.id, 1)}>
+            <Icon.ArrowDown size={12} />
+          </button>
+          <button className="mx-1" onClick={() => cloneElement(el.id)}>
+            <Icon.Copy size={12} />
           </button>
           <button
-            className="px-2 rounded bg-gray-300 mr-1"
-            onClick={() => {
-              addChildToElement(el.id, "img");
+            className="mx-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              removeElement(el.id);
             }}
           >
-            + img
+            <Icon.Trash size={12} />
           </button>
-          <button
-            className="px-2 rounded bg-gray-300 mr-1"
-            onClick={() => {
-              addChildToElement(el.id, false);
-            }}
-          >
-            + Text
-          </button>
+          {el.tag && el.tag !== "img" && (
+            <>
+              <button
+                className="px-1 rounded bg-gray-300 mr-1 flex items-center"
+                onClick={() => {
+                  addChildToElement(el.id, "div");
+                }}
+              >
+                <Icon.Plus size={12} />
+                <Icon.Square size={12} />
+              </button>
+              <button
+                className="px-1 rounded bg-gray-300 mr-1 flex items-center"
+                onClick={() => {
+                  addChildToElement(el.id, "img");
+                }}
+              >
+                <Icon.Plus size={12} />
+                <Icon.Image size={12} />
+              </button>
+              <button
+                className="px-1 rounded bg-gray-300 mr-1 flex items-center"
+                onClick={() => {
+                  addChildToElement(el.id, false);
+                }}
+              >
+                <Icon.Plus size={12} />
+                <Icon.Type size={12} />
+              </button>
+            </>
+          )}
         </>
       )}
     </div>
@@ -150,31 +157,33 @@ export default function ElementTreeItemSingle({
         ref={dropRefBefore}
       />
       <CollapsableElement title={AlwaysVisible}>
-        {el.children && (
-          <>
-            <div
-              className={isOverInside ? "bg-indigo-500" : undefined}
-              style={{
-                height: 2,
-                width: "100%",
-                position: "absolute",
-                left: "1rem",
-              }}
-            />
-            <ElementTreeItem
-              {...{
-                childrenArray: el.children,
-                setCurrentActive,
-                currentActive,
-                addChildToElement,
-                removeElement,
-                moveElement,
-                moveElementFromTo,
-                cloneElement,
-              }}
-            />
-          </>
-        )}
+        <div className="border-l border-gray-300">
+          {el.children && (
+            <>
+              <div
+                className={isOverInside ? "bg-indigo-500" : undefined}
+                style={{
+                  height: 2,
+                  width: "100%",
+                  position: "absolute",
+                  left: "1rem",
+                }}
+              />
+              <ElementTreeItem
+                {...{
+                  childrenArray: el.children,
+                  setCurrentActive,
+                  currentActive,
+                  addChildToElement,
+                  removeElement,
+                  moveElement,
+                  moveElementFromTo,
+                  cloneElement,
+                }}
+              />
+            </>
+          )}
+        </div>
       </CollapsableElement>
       <div
         className={isOverAfter ? "bg-indigo-500" : undefined}
