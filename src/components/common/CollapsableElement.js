@@ -1,7 +1,12 @@
 import { useState } from "react";
 import * as Icon from "react-feather";
 
-export default function CollapsableElement({ isOpen = true, title, ...props }) {
+export default function CollapsableElement({
+  isOpen = true,
+  title,
+  children,
+  ...props
+}) {
   const [open, setOpen] = useState(isOpen);
   return (
     <div className="relative" {...props}>
@@ -9,10 +14,11 @@ export default function CollapsableElement({ isOpen = true, title, ...props }) {
         className="absolute -left-4 top-1.5 px-1 text-gray-600"
         onClick={() => setOpen(!open)}
       >
-        {open ? <Icon.Minus size={10} /> : <Icon.Plus size={10} />}
+        {children &&
+          (open ? <Icon.Minus size={10} /> : <Icon.Plus size={10} />)}
       </button>
       {title}
-      <div>{open ? props.children : null}</div>
+      <div>{open ? children : null}</div>
     </div>
   );
 }

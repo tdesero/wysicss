@@ -150,40 +150,38 @@ export default function ElementTreeItemSingle({
   );
 
   return (
-    <li key={el.id} className={"relative text-xs z-10 " + activeClass}>
+    <li key={el.id} className={"pl-3 relative text-xs z-10 " + activeClass}>
       <div
         className={isOverBefore ? "bg-indigo-500" : undefined}
         style={{ height: 4, position: "absolute", width: "100%", zIndex: 2 }}
         ref={dropRefBefore}
       />
       <CollapsableElement title={AlwaysVisible}>
-        <div className="border-l border-gray-300">
-          {el.children && (
-            <>
-              <div
-                className={isOverInside ? "bg-indigo-500" : undefined}
-                style={{
-                  height: 2,
-                  width: "100%",
-                  position: "absolute",
-                  left: "1rem",
-                }}
-              />
-              <ElementTreeItem
-                {...{
-                  childrenArray: el.children,
-                  setCurrentActive,
-                  currentActive,
-                  addChildToElement,
-                  removeElement,
-                  moveElement,
-                  moveElementFromTo,
-                  cloneElement,
-                }}
-              />
-            </>
-          )}
-        </div>
+        {el.children && el.children.length !== 0 && (
+          <div className="border-l border-gray-300 -ml-2 pl-2">
+            <div
+              className={isOverInside ? "bg-indigo-500" : undefined}
+              style={{
+                height: 2,
+                width: "100%",
+                position: "absolute",
+                left: "1rem",
+              }}
+            />
+            <ElementTreeItem
+              {...{
+                childrenArray: el.children,
+                setCurrentActive,
+                currentActive,
+                addChildToElement,
+                removeElement,
+                moveElement,
+                moveElementFromTo,
+                cloneElement,
+              }}
+            />
+          </div>
+        )}
       </CollapsableElement>
       <div
         className={isOverAfter ? "bg-indigo-500" : undefined}

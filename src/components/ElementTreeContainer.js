@@ -16,7 +16,7 @@ export default function ElementTreeContainer() {
         cloneElement,
       }) => (
         <div>
-          <div className="border-t overflow-auto pb-5">
+          <div className="overflow-auto pb-5">
             <ElementTreeItem
               {...{
                 childrenArray: elements,
