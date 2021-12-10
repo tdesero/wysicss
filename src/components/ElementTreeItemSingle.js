@@ -76,6 +76,7 @@ export default function ElementTreeItemSingle({
       onClick={() => {
         setCurrentActive(el);
       }}
+      ref={el.tag && el.tag !== "img" ? dropRefInside : undefined}
     >
       <div
         className="flex rounded overflow-hidden flex-shrink-0 mr-1"
@@ -142,10 +143,10 @@ export default function ElementTreeItemSingle({
   );
 
   return (
-    <li key={el.id} className={"text-xs " + activeClass}>
+    <li key={el.id} className={"relative text-xs z-10 " + activeClass}>
       <div
         className={isOverBefore ? "bg-indigo-500" : undefined}
-        style={{ height: 4 }}
+        style={{ height: 4, position: "absolute", width: "100%", zIndex: 2 }}
         ref={dropRefBefore}
       />
       <CollapsableElement title={AlwaysVisible}>
@@ -159,7 +160,6 @@ export default function ElementTreeItemSingle({
                 position: "absolute",
                 left: "1rem",
               }}
-              ref={dropRefInside}
             />
             <ElementTreeItem
               {...{
@@ -178,7 +178,13 @@ export default function ElementTreeItemSingle({
       </CollapsableElement>
       <div
         className={isOverAfter ? "bg-indigo-500" : undefined}
-        style={{ height: 4 }}
+        style={{
+          height: 4,
+          bottom: 0,
+          position: "absolute",
+          width: "100%",
+          zIndex: 2,
+        }}
         ref={dropRefAfter}
       />
     </li>

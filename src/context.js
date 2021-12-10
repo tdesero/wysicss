@@ -401,6 +401,7 @@ export class ContextProvider extends Component {
   }
 
   moveElementFromTo(fromID, toID, position) {
+    if (fromID === toID) return;
     const elements = [...this.state.elements];
     let fromParentAndIndex = findParentAndIndexInElements(elements, fromID);
     let toParentAndIndex = findParentAndIndexInElements(elements, toID);
