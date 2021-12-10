@@ -42,18 +42,21 @@ export const ColorPicker = ({ color, onChange }) => {
         onClick={toggle}
       />
       {open && (
-        <div
-          ref={setPopperElement}
-          style={styles.popper}
-          {...attributes.popper}
-        >
-          <SketchPicker color={color} onChange={onChange} />
+        <>
+          <div className="fixed inset-0" onClick={close}></div>
           <div
-            ref={setArrowElement}
-            style={styles.arrow}
-            className="popper-arrow bg-gray-100"
-          />
-        </div>
+            ref={setPopperElement}
+            style={styles.popper}
+            {...attributes.popper}
+          >
+            <SketchPicker color={color} onChange={onChange} />
+            <div
+              ref={setArrowElement}
+              style={styles.arrow}
+              className="popper-arrow bg-gray-100"
+            />
+          </div>
+        </>
       )}
     </div>
   );
