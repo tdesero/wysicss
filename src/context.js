@@ -10,6 +10,7 @@ import {
   MOVE_ELEMENT_POSITION,
   BREAKPOINT_NAMES,
 } from "./constants";
+import { getPersistedValue, persistValue } from "./helpers/persist";
 var debounce = require("lodash/debounce");
 
 export const Context = createContext();
@@ -538,6 +539,8 @@ export class ContextProvider extends Component {
         console.log("history", this.state.history);
       }
     );
+    persistValue("elements", this.state.elements);
+    persistValue("classNames", this.state.classNames);
   }
 
   debouncedAddToHistory = debounce(this.addToHistory, 500);
@@ -557,7 +560,13 @@ export class ContextProvider extends Component {
   }
 
   componentDidMount() {
-    this.addToHistory();
+    this.setState(
+      {
+        classNames: getPersistedValue("classNames") || this.state.classNames,
+        elements: getPersistedValue("elements") || this.state.elements,
+      },
+      this.addToHistory
+    );
   }
 
   render() {

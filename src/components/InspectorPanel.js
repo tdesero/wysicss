@@ -129,7 +129,7 @@ export default function InspectorPanel() {
                     }}
                   />
                 ) : (
-                  <div class="p-4 text-sm">
+                  <div className="p-4 text-sm">
                     Click on an Element to style it.
                   </div>
                 )
