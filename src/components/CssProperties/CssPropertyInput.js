@@ -34,7 +34,7 @@ export default function CssPropertyInput({
     ? classNames.find((c) => cssClass.name === c.name)
     : null;
 
-  const origProp = origClass?.properties[propertyName] || undefined;
+  const origProp = origClass?.properties?.[propertyName] || undefined;
 
   return (
     <div className="border rounded p-2 my-1">
