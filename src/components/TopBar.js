@@ -35,35 +35,6 @@ export default function TopBar({
         </div>
       </div>
       <div className="flex justify-center items-center px-4">
-        <TooltipWrapper tooltip="Mobile">
-          <button
-            className={
-              "mx-1 " +
-              (responsiveWidth === breakpoints[MOBILE] ? "text-white" : "")
-            }
-            onClick={() => {
-              setResponsiveWidth(400);
-              setBreakpoint(MOBILE);
-            }}
-          >
-            <Icon.Smartphone size={16} />
-          </button>
-        </TooltipWrapper>
-        <TooltipWrapper tooltip="Tablet">
-          <button
-            className={
-              "relative mx-1 " +
-              (responsiveWidth === breakpoints[TABLET] ? "text-white" : "")
-            }
-            onClick={() => {
-              setResponsiveWidth(700);
-              setBreakpoint(TABLET);
-            }}
-          >
-            <Icon.Tablet size={16} />
-            <div className="absolute -top-px -right-px rounded-full bg-green-500 h-2 w-2"></div>
-          </button>
-        </TooltipWrapper>
         <TooltipWrapper tooltip="Desktop (Base Breakpoint)">
           <button
             className={
@@ -76,10 +47,38 @@ export default function TopBar({
             }}
           >
             <Icon.Monitor size={16} />
-            <div className="absolute -bottom-px -right-1 rounded-full bg-gray-900">
-              <Icon.Star size={8} fill="currentColor" />
-            </div>
-            <div className="absolute -top-px -right-px rounded-full bg-indigo-500 h-2 w-2"></div>
+            <div className="absolute -top-px -right-px rounded-full bg-indigo-500 h-1.5 w-1.5"></div>
+          </button>
+        </TooltipWrapper>
+        <Icon.ChevronRight size={12} />
+        <TooltipWrapper tooltip="Tablet">
+          <button
+            className={
+              "relative mx-1 " +
+              (responsiveWidth === breakpoints[TABLET] ? "text-white" : "")
+            }
+            onClick={() => {
+              setResponsiveWidth(700);
+              setBreakpoint(TABLET);
+            }}
+          >
+            <Icon.Tablet size={16} />
+            <div className="absolute -top-px -right-px rounded-full bg-green-500 h-1.5 w-1.5"></div>
+          </button>
+        </TooltipWrapper>
+        <Icon.ChevronRight size={12} />
+        <TooltipWrapper tooltip="Mobile">
+          <button
+            className={
+              "mx-1 " +
+              (responsiveWidth === breakpoints[MOBILE] ? "text-white" : "")
+            }
+            onClick={() => {
+              setResponsiveWidth(400);
+              setBreakpoint(MOBILE);
+            }}
+          >
+            <Icon.Smartphone size={16} />
           </button>
         </TooltipWrapper>
       </div>
