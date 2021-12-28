@@ -8,14 +8,16 @@ export default function createHTML({ classNames, elements, breakpoints }) {
     let properties = "";
     if (c.properties) {
       for (let [key, obj] of Object.entries(c.properties)) {
-        properties += `${key}: ${obj.value}${obj.unit};\n`;
+        if (!(obj.value === "" && obj.unit === "")) {
+          properties += `${key}: ${obj.value}${obj.unit};\n`;
+        }
       }
     }
     classNamesCss +=
-      `.${c.name} { \n${c.txt} \n${properties} } \n` +
-      `.${c.name}:hover { ${c[":hover"]} } \n` +
-      `.${c.name}::before { ${c[":before"]} } \n` +
-      `.${c.name}::after { ${c[":after"]} } \n`;
+      `.${c.name} { ${c.txt} ${properties} } \n` +
+      (c[":hover"] ? `.${c.name}:hover { ${c[":hover"]} } \n` : "") +
+      (c[":before"] ? `.${c.name}::before { ${c[":before"]} } \n` : "") +
+      (c[":after"] ? `.${c.name}::after { ${c[":after"]} } \n` : "");
 
     // maybe later i just need the current breakpoint for preview mode (if performance is bad...)
     if (c.breakpoints) {
@@ -25,7 +27,9 @@ export default function createHTML({ classNames, elements, breakpoints }) {
         let bpProps = "";
         if (css?.properties) {
           for (let [key, obj] of Object.entries(css.properties)) {
-            bpProps += `${key}: ${obj.value}${obj.unit};\n`;
+            if (!(obj.value === "" && obj.unit === "")) {
+              bpProps += `${key}: ${obj.value}${obj.unit};\n`;
+            }
           }
         }
         classNamesCss += `@media screen and (max-width: ${breakpoints[breakpoint]}px) {\n
