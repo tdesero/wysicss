@@ -1,6 +1,7 @@
 import NumberControl from "../common/NumberControl";
 import { useState, useEffect, useContext } from "react";
 import { Context } from "../../context";
+import { BREAKPOINT_NAMES } from "../../constants";
 
 export default function CssPropertyInput({
   propertyName,
@@ -11,7 +12,7 @@ export default function CssPropertyInput({
 
   ...props
 }) {
-  const { updateClassProperty, currentBreakpoint, classNames } =
+  const { updateClassProperty, breakpoints, currentBreakpoint, classNames } =
     useContext(Context);
 
   const startValue = cssClass?.properties?.[propertyName]?.value || "";
@@ -32,19 +33,36 @@ export default function CssPropertyInput({
 
   const origClass = currentBreakpoint
     ? classNames.find((c) => cssClass.name === c.name)
-    : null;
+    : undefined;
 
   const origProp = origClass?.properties?.[propertyName] || undefined;
+
+  const tabletProp =
+    currentBreakpoint === BREAKPOINT_NAMES.MOBILE
+      ? origClass?.breakpoints?.[BREAKPOINT_NAMES.TABLET]?.properties?.[
+          propertyName
+        ]
+      : undefined;
 
   return (
     <div className="border rounded p-2 my-1">
       <label className="text-xs block text-gray-400 relative">
         {label}{" "}
         {currentBreakpoint &&
+          tabletProp &&
+          (tabletProp.value || tabletProp.unit === "auto") && (
+            <span
+              className="ml-1 -top-1 bg-green-500 text-white px-1 rounded-full"
+              style={{ fontSize: ".5rem" }}
+            >
+              {tabletProp.value + tabletProp.unit}
+            </span>
+          )}
+        {currentBreakpoint &&
           origProp &&
           (origProp.value || origProp.unit === "auto") && (
             <span
-              className="absolute ml-1 -top-1 bg-indigo-500 text-white px-1 rounded-full"
+              className="ml-1 -top-1 bg-indigo-500 text-white px-1 rounded-full"
               style={{ fontSize: ".5rem" }}
             >
               {origProp.value + origProp.unit}

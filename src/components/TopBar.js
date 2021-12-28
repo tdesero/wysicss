@@ -52,7 +52,7 @@ export default function TopBar({
         <TooltipWrapper tooltip="Tablet">
           <button
             className={
-              "mx-1 " +
+              "relative mx-1 " +
               (responsiveWidth === breakpoints[TABLET] ? "text-white" : "")
             }
             onClick={() => {
@@ -61,6 +61,7 @@ export default function TopBar({
             }}
           >
             <Icon.Tablet size={16} />
+            <div className="absolute -top-px -right-px rounded-full bg-green-500 h-2 w-2"></div>
           </button>
         </TooltipWrapper>
         <TooltipWrapper tooltip="Desktop (Base Breakpoint)">
@@ -75,6 +76,9 @@ export default function TopBar({
             }}
           >
             <Icon.Monitor size={16} />
+            <div className="absolute -bottom-px -right-1 rounded-full bg-gray-900">
+              <Icon.Star size={8} fill="currentColor" />
+            </div>
             <div className="absolute -top-px -right-px rounded-full bg-indigo-500 h-2 w-2"></div>
           </button>
         </TooltipWrapper>
